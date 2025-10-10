@@ -1,0 +1,31 @@
+{
+  "weapons": [
+    {
+      "id": 1,
+      "className": "NomalWeapon",
+      "gunName": "ノーマル銃",
+      "energyCost": 1,
+      "damage" : 10,
+      "beamSpeed" : 5,
+      "beamLifetime" : 1
+    },
+    {
+      "id": 2,
+      "className": "ChargeWeapon",
+      "gunName": "チャージ銃",
+      "energyCost": 5,
+      "damage" : 15,
+      "beamSpeed" : 10,
+      "beamLifetime" : 2
+    },
+    {
+      "id": 3,
+      "className": "ReflectionWeapon",
+      "gunName": "リフレクション銃",
+      "energyCost": 10,
+      "damage" : 20,
+      "beamSpeed" : 15,
+      "beamLifetime" : 1
+    }
+  ]
+}
