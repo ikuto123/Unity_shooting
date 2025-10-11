@@ -25,7 +25,6 @@ public class AI_MoveToTargetAreaState : IState
         // 敵を発見した場合
         if (foundEnemy != null)
         {
-            Debug.Log(_ai.gameObject.name + "が敵を発見！ -> " + foundEnemy.name);
             // ターゲット情報を更新
             _ai.targetEnemy = foundEnemy;
             // 追跡状態に移行する
