@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class CharacterManager : MonoBehaviour, IChargeable , IDamageable
+public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IRecover
 {
     public WeaponManager WeaponManager { get; private set; }
     
