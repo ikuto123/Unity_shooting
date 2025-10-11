@@ -9,13 +9,17 @@ namespace AIState
         public AIMovement Movement { get; private set; }
         public CharactorTeam MyTeam { get; private set; }
         
-        [Header("移動パラメータ")]
-        public float moveSpeed = 3.5f;
+        private CharacterManager _characterManager;
+        
+        public float moveSpeed { get; private set; } 
         
         [Header("索敵パラメータ")]
-        public float sightRange = 15f; // 索敵範囲（距離）
-        [Range(0, 360)] public float sightAngle = 90f; // 索敵範囲（角度）
+        public float sightRange; // 索敵範囲（距離）
+        [Range(0, 360)] public float sightAngle ; // 索敵範囲（視野角）
         public LayerMask obstacleLayer; // 障害物（壁など）のレイヤー
+        
+        [Header("攻撃パラメータ")]
+        public float attackRange; // 攻撃可能距離
         
         [Header("ターゲット情報")]
         public Transform targetEnemy { get; set; }
@@ -24,6 +28,7 @@ namespace AIState
         private void Awake()
         {
             MyTeam = GetComponent<CharactorTeam>();
+            _characterManager = GetComponent<CharacterManager>();
             CharacterSensor = new AICharacterSensor(this);
             Movement = new AIMovement(this);
             
@@ -31,7 +36,9 @@ namespace AIState
 
         private void Start()
         {
+            moveSpeed = _characterManager.MoveSpeed;
             ChangeState(new AI_IdleState(this));
+            
             if (GameManager.Instance != null)
             {
                 targetAreaPosition = GameManager.Instance.GetTargetAreaPosition();
@@ -59,23 +66,23 @@ namespace AIState
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
-            // --- 索敵範囲（距離）をワイヤーの球で表示 ---
-            Gizmos.color = Color.yellow; // 色を黄色に設定
-            Gizmos.DrawWireSphere(transform.position, sightRange);
+            // --- 索敵範囲（距離）を黄色のワイヤー球で表示 ---
+            //Gizmos.color = Color.yellow;
+            //Gizmos.DrawWireSphere(transform.position, sightRange);
+            
+            // --- 攻撃範囲（距離）を赤色のワイヤー球で表示 ---
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, attackRange);
 
-            // --- 索敵範囲（視野角）を扇形で表示 ---
-            UnityEditor.Handles.color = new Color(0, 0, 1, 0.7f); // 色を半透明の黄色に設定
-        
-            // 視野角の開始地点のベクトルを計算
+            // --- 索敵範囲（視野角）を半透明の黄色い扇形で表示 ---
+            UnityEditor.Handles.color = new Color(1, 1, 0, 0.7f); 
             Vector3 from = Quaternion.Euler(0, -sightAngle / 2, 0) * transform.forward;
-        
-            // 扇形を描画
             UnityEditor.Handles.DrawSolidArc(
                 transform.position,
-                Vector3.up,        
-                from,              
-                sightAngle,        
-                sightRange    
+                Vector3.up,
+                from,
+                sightAngle,
+                sightRange
             );
         }
 #endif
