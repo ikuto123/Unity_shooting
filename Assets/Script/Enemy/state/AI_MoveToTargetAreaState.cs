@@ -11,7 +11,7 @@ public class AI_MoveToTargetAreaState : IState
     }
     public void OnEnter()
     {
-        Debug.Log("攻撃状態に入りました！");
+        Debug.Log("占領エリアに向かいます");
     }
 
     public void OnUpdate()
