@@ -10,6 +10,7 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable
     
     public int MaxHp { get; private set; }
     private int _currentHp;
+    public float MoveSpeed { get; private set; }
     public int CurrentHp
     {
         get => _currentHp;
@@ -46,6 +47,7 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable
 
         CharacterStatsData initStats = JsonUtility.FromJson<CharacterStatsData>(statsJson.text);
         
+        MoveSpeed = initStats.moveSpeed;
         MaxHp = initStats.maxHp;
         MaxCharge = initStats.maxCharge;
         CurrentHp = MaxHp;
