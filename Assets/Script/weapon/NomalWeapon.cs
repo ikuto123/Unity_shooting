@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class NomalWeapon : WeaponBaseClass
 {
-    public NomalWeapon(int id, string name, int energyCost, int damage , float beamSpeed, float beamLifetime)
-        : base(id, name, energyCost,damage , beamSpeed, beamLifetime) { }
+    public NomalWeapon(int id, string name, int energyCost, int damage , float beamSpeed, float beamLifetime, int maxActiveBeam)
+        : base(id, name, energyCost,damage , beamSpeed, beamLifetime ,maxActiveBeam) { }
 
     public override bool Fire(IChargeable user)
     {

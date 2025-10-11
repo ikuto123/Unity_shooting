@@ -98,6 +98,9 @@ GameObject:
   - component: {fileID: 6302720292497552448}
   - component: {fileID: 5586194611117315198}
   - component: {fileID: 635667809615833519}
+  - component: {fileID: 802853342098829174}
+  - component: {fileID: 5306234186602743413}
+  - component: {fileID: 2451782733989089985}
   m_Layer: 0
   m_Name: Beam
   m_TagString: Untagged
@@ -181,5 +184,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9a975e9b7d83434a8c4c061e564bbec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &802853342098829174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5508042907778175642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e46a047b902868438165adcf772fe33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5306234186602743413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5508042907778175642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fedb185f1cb167445a83aa17f636b874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2451782733989089985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5508042907778175642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0895d69bbabf9d145ab98325ec615b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

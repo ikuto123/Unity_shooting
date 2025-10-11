@@ -21,7 +21,6 @@ public class AI_MoveToTargetAreaState : IState
     public void OnUpdate()
     {
         var foundEnemy = _ai.CharacterSensor.FindEnemy();
-        Debug.Log("追跡してません");
         // 敵を発見した場合
         if (foundEnemy != null)
         {

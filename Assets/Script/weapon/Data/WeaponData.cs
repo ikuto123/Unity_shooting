@@ -8,4 +8,5 @@ public class WeaponData
     public int damage;
     public float beamSpeed;
     public float beamLifetime;
+    public int maxActiveBeam;
 }
