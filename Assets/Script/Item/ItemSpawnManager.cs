@@ -51,7 +51,7 @@ public class ItemSpawnManager : MonoBehaviour
         {
             //アイテムの種類が均等になるようにプールを作成
             ItemData itemToPool = _possibleItems[i % _possibleItems.Count];
-            GameObject itemInstance = Instantiate(itemToPool.itemPrefab, Vector3.zero, Quaternion.identity, _pearentTransform);
+            GameObject itemInstance = Instantiate(itemToPool.ItemPrefab, Vector3.zero, Quaternion.identity, _pearentTransform);
             
             itemInstance.SetActive(false);
             _itemPool.Add(itemInstance);

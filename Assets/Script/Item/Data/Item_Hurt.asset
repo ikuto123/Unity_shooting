@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cdd8c62d74eb6d4eb40069aa34cde60, type: 3}
   m_Name: Item_Hurt
   m_EditorClassIdentifier: 
-  itemName: 
-  itemPrefab: {fileID: 0}
+  _itemPrefab: {fileID: 5746152369408784362, guid: 09e146ef022c16641bb49aa79c62c05d, type: 3}
+  _prefabResourcePath: Item/Item_hart

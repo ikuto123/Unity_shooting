@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cdd8c62d74eb6d4eb40069aa34cde60, type: 3}
   m_Name: Item_Charge
   m_EditorClassIdentifier: 
-  itemName: 
-  itemPrefab: {fileID: 0}
+  _itemPrefab: {fileID: 4076498934706448353, guid: 542363d96935b55478e264fbc5e6b291, type: 3}
+  _prefabResourcePath: Item/Item_charge
