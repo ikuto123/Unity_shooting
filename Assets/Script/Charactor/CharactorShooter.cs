@@ -51,7 +51,6 @@ public class CharactorShooter : MonoBehaviour
 
     private void FireProjectile(WeaponBaseClass weaponData)
     {
-        Debug.Log("FireProjectile");
         if (_activeProjectiles.Count >= _maxActiveProjectiles)
         {
             Debug.Log("発射制限数に達しているため、新しい弾を発射できません。");
