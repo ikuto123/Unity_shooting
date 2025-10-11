@@ -7,10 +7,12 @@ public abstract class WeaponBaseClass: IWeapon
     public string GunName { get; private set; }
     public int EnergyCost { get; private set; }
     public int Damage { get; private set; }
-    public float BeamSpeed { get; private set; }    // 追加
+    public float BeamSpeed { get; private set; }  
     public float BeamLifetime { get; private set; }
+    public IHitEffect HitEffect { get; protected set; }
+    public int MaxActiveBeam { get; private set; }
     
-    public WeaponBaseClass(int id, string name, int energyCost, int damage, float beamSpeed, float beamLifetime)
+    public WeaponBaseClass(int id, string name, int energyCost, int damage, float beamSpeed, float beamLifetime, int maxActiveBeam)
     {
         this.GunID = id;
         this.GunName = name;
@@ -18,6 +20,8 @@ public abstract class WeaponBaseClass: IWeapon
         this.Damage = damage;
         this.BeamSpeed = beamSpeed;
         this.BeamLifetime = beamLifetime;
+        this.MaxActiveBeam = maxActiveBeam;
+        this.HitEffect = new DamageEffect();
     }
 
     public virtual bool Fire(IChargeable user)

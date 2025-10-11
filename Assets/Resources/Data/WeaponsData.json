@@ -7,7 +7,8 @@
       "energyCost": 1,
       "damage" : 10,
       "beamSpeed" : 5,
-      "beamLifetime" : 1
+      "beamLifetime" : 1,
+      "maxActiveBeam": 5
     },
     {
       "id": 2,
@@ -16,7 +17,8 @@
       "energyCost": 5,
       "damage" : 15,
       "beamSpeed" : 10,
-      "beamLifetime" : 2
+      "beamLifetime" : 2,
+      "maxActiveBeam": 1
     },
     {
       "id": 3,
@@ -25,7 +27,8 @@
       "energyCost": 10,
       "damage" : 20,
       "beamSpeed" : 15,
-      "beamLifetime" : 1
+      "beamLifetime" : 1,
+      "maxActiveBeam": 3
     }
   ]
 }

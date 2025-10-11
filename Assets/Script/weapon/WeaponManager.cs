@@ -63,7 +63,8 @@ public class WeaponManager
                         weaponData.energyCost ,
                         weaponData.damage,
                         weaponData.beamSpeed,
-                        weaponData.beamLifetime
+                        weaponData.beamLifetime,
+                        weaponData.maxActiveBeam
                     };
                     IWeapon weaponInstance = (IWeapon)Activator.CreateInstance(weaponType, args);
                     _guns.Add(weaponData.id, weaponInstance);

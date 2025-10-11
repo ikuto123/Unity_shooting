@@ -1,13 +1,12 @@
 using System.Collections.Generic;
+using Beam;
 using UnityEngine;
 
 public class CharactorShooter : MonoBehaviour
 {
     [SerializeField] private GameObject[] _beamPool;
     
-    private int _maxActiveProjectiles = 5;
-    
-    private readonly List<GameObject> _activeProjectiles = new List<GameObject>();
+    private readonly List<GameObject> _activeBeams = new List<GameObject>();
     private int _poolIndex = 0;
     
     private CharacterManager _characterManager;
@@ -25,7 +24,7 @@ public class CharactorShooter : MonoBehaviour
     {
         if (_characterManager != null && _characterManager.WeaponManager != null)
         {
-            _characterManager.WeaponManager.OnFireRequest += FireProjectile;
+            _characterManager.WeaponManager.OnFireRequest += FireBeamObj;
         }
         else
         {
@@ -37,7 +36,7 @@ public class CharactorShooter : MonoBehaviour
     {
         if (_characterManager != null && _characterManager.WeaponManager != null)
         {
-            _characterManager.WeaponManager.OnFireRequest += FireProjectile;
+            _characterManager.WeaponManager.OnFireRequest += FireBeamObj;
         }
     }
 
@@ -45,13 +44,14 @@ public class CharactorShooter : MonoBehaviour
     {
         if (_characterManager != null && _characterManager.WeaponManager != null)
         {
-            _characterManager.WeaponManager.OnFireRequest -= FireProjectile;
+            _characterManager.WeaponManager.OnFireRequest -= FireBeamObj;
         }
     }
 
-    private void FireProjectile(WeaponBaseClass weaponData)
+    //弾の発射処理
+    private void FireBeamObj(WeaponBaseClass weaponData)
     {
-        if (_activeProjectiles.Count >= _maxActiveProjectiles)
+        if (_activeBeams.Count >= weaponData.MaxActiveBeam)
         {
             Debug.Log("発射制限数に達しているため、新しい弾を発射できません。");
             return; 
@@ -64,19 +64,17 @@ public class CharactorShooter : MonoBehaviour
 
             if (!pooledObject.activeInHierarchy)
             {
-                // 3. 利用可能な弾を見つけたら発射処理を行う
-                ActivateProjectile(pooledObject, weaponData);
-
-                // 4. 次回検索時のためにインデックスを更新
+                ActivateBeam(pooledObject, weaponData);
+                
                 _poolIndex = (index + 1) % _beamPool.Length;
                 
-                return; // 発射したのでメソッドを抜ける
+                return;
             }
         }
     }
     
     //弾の有効化と初期化
-    private void ActivateProjectile(GameObject beamObj, WeaponBaseClass weaponData)
+    private void ActivateBeam(GameObject beamObj, WeaponBaseClass weaponData)
     {
         // 発射位置と角度を設定
         //beam.transform.position = _muzzlePoint.position;
@@ -84,23 +82,22 @@ public class CharactorShooter : MonoBehaviour
 
         // 弾を有効化
         beamObj.SetActive(true);
-        _activeProjectiles.Add(beamObj);
+        _activeBeams.Add(beamObj);
 
         // 弾の初期化（ダメージとコールバックを設定）
-        var beamClass = beamObj.GetComponent<Beam>();
+        var beamManager = beamObj.GetComponent<BeamManager>();
         if (beamObj != null)
         {
-            beamClass.Initialize(weaponData, OnProjectileDeactivated);
+            beamManager.Initialize(weaponData, OnBeamDeactivated);
         }
     }
     
     //弾が非アクティブになった時に呼び出されるコールバックメソッド
-    private void OnProjectileDeactivated(GameObject projectile)
+    private void OnBeamDeactivated(GameObject projectile)
     {
-        // アクティブリストから削除する
-        if (_activeProjectiles.Contains(projectile))
+        if (_activeBeams.Contains(projectile))
         {
-            _activeProjectiles.Remove(projectile);
+            _activeBeams.Remove(projectile);
         }
     }
 }
