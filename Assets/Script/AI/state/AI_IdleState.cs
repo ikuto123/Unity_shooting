@@ -3,12 +3,13 @@ using UnityEngine;
 
 public class AI_IdleState : IState
 {
-    private AIController _owner;
+    private readonly AIController _ai;
+
     public AI_IdleState(AIController ai)
     {
-        _owner = ai;
+        _ai = ai;
     }
-    
+
     public void OnEnter()
     {
         Debug.Log("待機状態に入りました");
@@ -16,11 +17,8 @@ public class AI_IdleState : IState
 
     public void OnUpdate()
     {
-        // スペースキーが押されたら、攻撃状態に切り替える
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _owner.ChangeState(new AI_AttackingState(_owner));
-        }
+        // 即座に目標エリアへの移動状態へ移行する
+        _ai.ChangeState(new AI_MoveToTargetAreaState(_ai));
     }
 
     public void OnExit()
