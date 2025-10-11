@@ -9,7 +9,7 @@ namespace AIState
         void Start()
         {
             // 初期ステートを設定
-            ChangeState(new IdleState(this));
+            ChangeState(new AI_IdleState(this));
         }
 
         void Update()

@@ -1,11 +1,11 @@
 using AIState;
 using UnityEngine;
 
-public class AI_MoveToTargetAreaState : IState
+public class AI_SearchEnemyState : IState
 {
     private AIController _ai;
     
-    public AI_MoveToTargetAreaState(AIController ai)
+    public AI_SearchEnemyState(AIController ai)
     {
         _ai = ai;
     }
