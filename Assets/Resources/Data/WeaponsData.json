@@ -2,13 +2,14 @@
   "weapons": [
     {
       "id": 1,
-      "className": "NomalWeapon",
+      "className": "NormalWeapon",
       "gunName": "ノーマル銃",
       "energyCost": 1,
       "damage" : 10,
       "beamSpeed" : 5,
       "beamLifetime" : 1,
-      "maxActiveBeam": 5
+      "maxActiveBeam": 5,
+      "fireRate": 5.0
     },
     {
       "id": 2,
@@ -18,7 +19,8 @@
       "damage" : 15,
       "beamSpeed" : 10,
       "beamLifetime" : 2,
-      "maxActiveBeam": 1
+      "maxActiveBeam": 1,
+      "fireRate": 4.5
     },
     {
       "id": 3,
@@ -28,7 +30,8 @@
       "damage" : 20,
       "beamSpeed" : 15,
       "beamLifetime" : 1,
-      "maxActiveBeam": 3
+      "maxActiveBeam": 3,
+      "fireRate": 5.0
     }
   ]
 }

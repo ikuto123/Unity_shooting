@@ -9,5 +9,7 @@ public class PlayerWeaponInput
         else if (Input.GetKeyDown(KeyCode.Alpha3)) { character.WeaponManager.SelectGun(3); }
         
         if (Input.GetMouseButtonDown(0)){ character.WeaponManager.FireCurrentGun(character); }
+        if (Input.GetMouseButton(0)) {character.WeaponManager?.FireCurrentGun(character);}
+        
     }
 }

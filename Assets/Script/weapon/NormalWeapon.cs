@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public class NomalWeapon : WeaponBaseClass
+public class NormalWeapon : WeaponBaseClass
 {
-    public NomalWeapon(int id, string name, int energyCost, int damage , float beamSpeed, float beamLifetime, int maxActiveBeam)
-        : base(id, name, energyCost,damage , beamSpeed, beamLifetime ,maxActiveBeam) { }
+    public NormalWeapon(int id, string name, int energyCost, int damage , 
+        float beamSpeed, float beamLifetime, int maxActiveBeam , float fireRate)
+        : base(id, name, energyCost,damage , beamSpeed, beamLifetime ,maxActiveBeam ,fireRate) { }
 
     public override bool Fire(IChargeable user)
     {
