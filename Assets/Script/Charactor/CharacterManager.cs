@@ -62,12 +62,22 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
     
     public void RecoverHp(int amount)
     {
+        if (CurrentHp >= MaxHp)
+        {
+            CurrentHp = MaxHp;
+            return;
+        }
         CurrentHp += amount;
         Debug.Log($"{amount} HP回復！ 現在のHP: {CurrentHp}");
     }
     
     public void RecoverCharge(int amount)
     {
+        if (CurrentCharge >= MaxCharge)
+        {
+            CurrentCharge = MaxCharge;
+            return;
+        }
         CurrentCharge += amount;
         Debug.Log($"{amount} チャージ回復！ 現在のチャージ: {CurrentCharge}");
     }
