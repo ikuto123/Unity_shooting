@@ -60,6 +60,7 @@ public class CharactorShooter : MonoBehaviour
             Debug.Log("発射制限数に達しているため、新しい弾を発射できません。");
             return; 
         }
+        _characterManager.UseCharge(weaponData.EnergyCost);
         
         for (int i = 0; i < _beamPool.Length; i++)
         {
