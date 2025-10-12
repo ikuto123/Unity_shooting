@@ -35,9 +35,9 @@ namespace Beam
             _lifetime.StartLifetime(weaponData.BeamLifetime);
         }
 
-        public void ExecuteHitEffect(Collision collision)
+        public void ExecuteHitEffect(Collider other)
         {
-            if (collision.gameObject.TryGetComponent<ITeamAffiliated>(out var targetAffiliation))
+            if (other.gameObject.TryGetComponent<ITeamAffiliated>(out var targetAffiliation))
             {
                 if (targetAffiliation.Team == this.Team)
                 {
@@ -45,7 +45,7 @@ namespace Beam
                 }
             }
 
-            _weaponData?.HitEffect?.Execute(collision, _weaponData);
+            _weaponData?.HitEffect?.Execute(other, _weaponData);
             DeActivate();
         }
         

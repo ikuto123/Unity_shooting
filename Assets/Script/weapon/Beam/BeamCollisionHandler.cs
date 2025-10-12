@@ -10,11 +10,11 @@ namespace Beam
         {
             _beamManager = GetComponent<BeamManager>();
         }
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
-            Debug.Log("衝突" + collision.gameObject.name);
+            Debug.Log("衝突" + other.gameObject.name);
             // 衝突したことを通知するだけ
-            _beamManager.ExecuteHitEffect(collision);
+            _beamManager.ExecuteHitEffect(other);
         }
     }
 }
