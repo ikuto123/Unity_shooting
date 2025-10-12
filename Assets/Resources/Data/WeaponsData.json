@@ -4,7 +4,7 @@
       "id": 1,
       "className": "NormalWeapon",
       "gunName": "ノーマル銃",
-      "energyCost": 1,
+      "energyCost": 10,
       "damage" : 10,
       "beamSpeed" : 5,
       "beamLifetime" : 1,

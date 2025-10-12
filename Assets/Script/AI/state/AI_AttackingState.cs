@@ -26,11 +26,24 @@ public class AI_AttackingState : IState
         }
         float distanceToEnemy = Vector3.Distance(_ai.transform.position, _ai.targetEnemy.position);
         
+        //アタックの距離より離れたらチェイスする
         if (distanceToEnemy > _ai.attackRange)
         {
             _ai.ChangeState(new AI_ChaseEnemyState(_ai));
             return; 
         }
+        
+        var currentWeapon = _ai.CharacterManager.WeaponManager.CurrentGun;
+        if (currentWeapon == null) return;
+        //チャージが残っているかどうか
+        if (_ai.CharacterManager.CurrentCharge < currentWeapon.EnergyCost)
+        {
+            Debug.Log(_ai.gameObject.name + ": エネルギー切れのため、索敵状態に戻ります。");
+            // チャージが足りないので、索敵状態に戻る
+            _ai.ChangeState(new AI_ChargeWeaponState(_ai));
+            return;
+        }
+        
         Vector3 directionToLook = _ai.targetEnemy.position - _ai.transform.position;
         directionToLook.y = 0;
         if (directionToLook != Vector3.zero)
