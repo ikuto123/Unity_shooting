@@ -35,24 +35,18 @@ public abstract class WeaponBaseClass: IWeapon
         {
             return false; 
         }
-        
-        if (user != null && user.HasEnoughCharge(EnergyCost))//エネルギーがあれば打つ
-        {
-            if (FireRate > 0)//次のクールタイムを測定
-            {
-                _nextFireTime = Time.time + 1f / FireRate;
-            }
-            user.UseCharge(EnergyCost);
-            
-            Debug.Log($"【{GunName}】発射成功。残りチャージ: {user.CurrentCharge} / {user.MaxCharge}");
-            Debug.Log("ダメージ数" + Damage);
-            return true;
-        }
-        else
+        if (user == null || !user.HasEnoughCharge(EnergyCost))
         {
             Debug.Log($"{GunName}はチャージ不足で発射できません。");
             return false;
         }
+        
+        if (FireRate > 0)
+        {
+            _nextFireTime = Time.time + 1f / FireRate;
+        }
+
+        return true;
     }
     
 }
