@@ -6,14 +6,18 @@ public class CharactorShooter : MonoBehaviour
 {
     [SerializeField] private GameObject[] _beamPool;
     
+    [SerializeField] private Transform _muzzlePoint;
+    
     private readonly List<GameObject> _activeBeams = new List<GameObject>();
     private int _poolIndex = 0;
     
     private CharacterManager _characterManager;
 
+    private CharactorTeam _character;
     private void Awake()
     {
         _characterManager = GetComponent<CharacterManager>();
+        _character = GetComponent<CharactorTeam>();
         foreach (var projectile in _beamPool)
         {
             projectile.SetActive(false);
@@ -77,8 +81,8 @@ public class CharactorShooter : MonoBehaviour
     private void ActivateBeam(GameObject beamObj, WeaponBaseClass weaponData)
     {
         // 発射位置と角度を設定
-        //beam.transform.position = _muzzlePoint.position;
-        //beam.transform.rotation = _muzzlePoint.rotation;
+        beamObj.transform.position = _muzzlePoint.position;
+        beamObj.transform.rotation = _muzzlePoint.rotation;
 
         // 弾を有効化
         beamObj.SetActive(true);
@@ -88,7 +92,7 @@ public class CharactorShooter : MonoBehaviour
         var beamManager = beamObj.GetComponent<BeamManager>();
         if (beamObj != null)
         {
-            beamManager.Initialize(weaponData, OnBeamDeactivated);
+            beamManager.Initialize(weaponData,_character.Team, OnBeamDeactivated);
         }
     }
     

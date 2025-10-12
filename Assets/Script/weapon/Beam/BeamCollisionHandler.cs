@@ -12,6 +12,7 @@ namespace Beam
         }
         private void OnCollisionEnter(Collision collision)
         {
+            Debug.Log("衝突" + collision.gameObject.name);
             // 衝突したことを通知するだけ
             _beamManager.ExecuteHitEffect(collision);
         }

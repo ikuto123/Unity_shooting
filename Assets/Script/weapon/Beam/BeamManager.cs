@@ -4,10 +4,11 @@ using UnityEngine;
 
 namespace Beam
 {
-    public class BeamManager : MonoBehaviour
+    public class BeamManager : MonoBehaviour ,ITeamAffiliated
     {
         public int Damage { get; private set; }
-
+        public Team Team { get; private set; }
+        
         private BeamMove _mover;
         private BeamLifeTime _lifetime;
         public BeamCollisionHandler CollisionHandler { get; private set; }
@@ -22,9 +23,10 @@ namespace Beam
             CollisionHandler = GetComponent<BeamCollisionHandler>();
         }
 
-        public void Initialize(WeaponBaseClass weaponData, Action<GameObject> onDeactivatedCallback)
+        public void Initialize(WeaponBaseClass weaponData,Team team, Action<GameObject> onDeactivatedCallback)
         {
             _weaponData = weaponData;
+            this.Team = team;
             // データを設定
             _onDeactivatedCallback = onDeactivatedCallback;
 
@@ -35,9 +37,15 @@ namespace Beam
 
         public void ExecuteHitEffect(Collision collision)
         {
-            // 保持している武器データから効果を取り出し、実行する
-            _weaponData?.HitEffect?.Execute(collision, _weaponData);
+            if (collision.gameObject.TryGetComponent<ITeamAffiliated>(out var targetAffiliation))
+            {
+                if (targetAffiliation.Team == this.Team)
+                {
+                    return;
+                }
+            }
 
+            _weaponData?.HitEffect?.Execute(collision, _weaponData);
             DeActivate();
         }
         
