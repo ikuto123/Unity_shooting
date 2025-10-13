@@ -92,6 +92,7 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
     {
         if (this == null) return;
         transform.gameObject.SetActive(false);
+        GameManager.Instance.SpawnManager.RequestRespawn(this);
         Debug.Log($"{gameObject.name} は倒れた。");
     }
     
