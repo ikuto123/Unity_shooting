@@ -3198,6 +3198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f11e40041b18aee428dfc1fad29dd43a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 330585543}
+  sensitivity: 0.5
 --- !u!114 &2018570156
 MonoBehaviour:
   m_ObjectHideFlags: 0
