@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerInputController : MonoBehaviour
@@ -8,13 +9,14 @@ public class PlayerInputController : MonoBehaviour
     private CameraController _cameraController;
     
     [Header("Camera")]
-    [SerializeField] private GameObject camera;
-    [SerializeField] private float sensitivity;//カメラ感度
+    private Transform _player;
+    private float _sensitivity = 0.5f;//カメラ感度
     
     CharacterManager _characterManager;
     private void Start()
     {
-        _cameraController = new CameraController(camera , sensitivity);
+        _player = this.gameObject.transform;
+        _cameraController = new CameraController(_player , _sensitivity);
         _characterManager = GetComponent<CharacterManager>();
         _playerMoveInput = new PlayerMoveInput(GetComponent<Rigidbody>());
     }

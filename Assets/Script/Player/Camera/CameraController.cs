@@ -2,28 +2,35 @@ using UnityEngine;
 
 public class CameraController
 {
-    private GameObject camera;
-    private CameraInput cameraInput;
-    private float sensitivity;
-    public CameraController(GameObject camera ,float sensitivity)
+    private Transform _player;
+    private MouseInput _playerInput;
+    private float _sensitivity;
+
+    private float _pitch = 0f; // X軸用のみ保持！
+
+    public CameraController(Transform player, float sensitivity)
     {
-        this.camera = camera;
-        cameraInput = new CameraInput();
-        this.sensitivity = sensitivity;
+        _player = player;
+        _playerInput = new MouseInput();
+        _sensitivity = sensitivity;
     }
 
     public void CameraRotation()
     {
-        Vector3 input = cameraInput.MouseInputDistance() * sensitivity;
+        Vector3 input = _playerInput.MouseInputDistance() * _sensitivity;
 
-        // 現在の回転を取得
-        Vector3 currentEuler = camera.transform.rotation.eulerAngles;
+        // X軸（上下）だけを計算して、自前で保持
+        _pitch -= input.y;
 
-        // 新しい回転を適用（Z軸は固定）
-        float newX = currentEuler.x - input.y;
-        float newY = currentEuler.y + input.x;
+        // X軸のみ制限
+        _pitch = Mathf.Clamp(_pitch, -20f, 20f);
 
-        camera.transform.rotation = Quaternion.Euler(newX, newY, 0f);
+        // Y軸（左右）は制限なし
+        float yaw = _player.rotation.eulerAngles.y + input.x;
+
+        // X軸（上下）= _pitch（制限済）
+        // Y軸（左右）= yaw
+        // Z軸 = 0で固定
+        _player.rotation = Quaternion.Euler(_pitch, yaw, 0f);
     }
-
 }
