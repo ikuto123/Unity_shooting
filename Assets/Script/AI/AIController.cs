@@ -12,7 +12,6 @@ namespace AIState
         
         private CharacterManager _characterManager;
         
-        
         public float moveSpeed { get; private set; } 
         
         [Header("索敵パラメータ")]
@@ -45,7 +44,7 @@ namespace AIState
             
             if (GameManager.Instance != null)
             {
-                targetAreaPosition = GameManager.Instance.GetTargetAreaPosition();
+                targetAreaPosition = GameManager.Instance.OccupationManager.GetTargetAreaPosition();
             }
         }
 

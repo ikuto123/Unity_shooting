@@ -54,6 +54,12 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
         CurrentHp = MaxHp;
         CurrentCharge = MaxCharge;
     }
+    
+    public void ResetStatus()
+    {
+        CurrentHp = MaxHp;
+        CurrentCharge = MaxCharge;
+    }
 
     public void TakeDamage(int damage)
     {

@@ -14,7 +14,7 @@ public class AI_ChargeWeaponState : IState
     
     public void OnEnter()
     {
-        var closestArea = GameManager.Instance.GetClosestRecoveryArea(_ai.MyTeam.Team, _ai.transform.position);
+        var closestArea = GameManager.Instance.RecoveryManager.GetClosestRecoveryArea(_ai.MyTeam.Team, _ai.transform.position);
         
         if (closestArea != null)
         {
@@ -32,7 +32,6 @@ public class AI_ChargeWeaponState : IState
             // 回復エリアが見つからなかった場合の予備の行動
             _ai.ChangeState(new AI_MoveToTargetAreaState(_ai));
         }
-        
         
         Debug.Log("攻撃状態に入りました！");
     }
