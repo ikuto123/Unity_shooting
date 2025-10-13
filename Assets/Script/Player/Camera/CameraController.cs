@@ -6,7 +6,7 @@ public class CameraController
     private MouseInput _playerInput;
     private float _sensitivity;
 
-    private float _pitch = 0f; // X軸用のみ保持！
+    private float _pitch = 0f;
 
     public CameraController(Transform player, float sensitivity)
     {
@@ -27,10 +27,7 @@ public class CameraController
 
         // Y軸（左右）は制限なし
         float yaw = _player.rotation.eulerAngles.y + input.x;
-
-        // X軸（上下）= _pitch（制限済）
-        // Y軸（左右）= yaw
-        // Z軸 = 0で固定
+        
         _player.rotation = Quaternion.Euler(_pitch, yaw, 0f);
     }
 }
