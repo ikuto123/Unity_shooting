@@ -42,7 +42,12 @@ public class PlayerMoveInput
     
     public void Movement()
     {
-        Vector3 targetVelocity = new Vector3(_moveDirection.x * _moveSpeed, _rb.linearVelocity.y, _moveDirection.z * _moveSpeed);
+        // _moveDirectionをプレイヤーのローカル座標系からワールド座標系に変換する
+        Vector3 worldMoveDirection = _rb.transform.TransformDirection(_moveDirection);
+
+        // 変換されたワールド座標の方向を使って速度を計算する
+        // Y軸（垂直方向）の速度は現在のものを維持する
+        Vector3 targetVelocity = new Vector3(worldMoveDirection.x * _moveSpeed, _rb.linearVelocity.y, worldMoveDirection.z * _moveSpeed);
 
         _rb.linearVelocity = targetVelocity;
     }
