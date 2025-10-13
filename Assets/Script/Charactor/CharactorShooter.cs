@@ -17,18 +17,6 @@ public class CharactorShooter : MonoBehaviour
         _characterManager = GetComponent<CharacterManager>();
         _character = GetComponent<CharactorTeam>();
     }
-
-    void Start()
-    {
-        if (_characterManager != null && _characterManager.WeaponManager != null)
-        {
-            _characterManager.WeaponManager.OnFireRequest += FireBeamObj;
-        }
-        else
-        {
-            Debug.LogError("CharacterManager または WeaponInventory が見つからないため、イベントを登録できませんでした。", this.gameObject);
-        }
-    }
     
     private void OnEnable()
     {

@@ -89,7 +89,7 @@ public class WeaponManager
         {
             _currentGunID = gunID;
             var gun = CurrentGun;
-            Debug.Log($"ID {gunID} の {gun.GunName} を選択しました。");
+            //Debug.Log($"ID {gunID} の {gun.GunName} を選択しました。");
             OnGunSwitched?.Invoke(_currentGunID, gun.GunName);
         }
     }
