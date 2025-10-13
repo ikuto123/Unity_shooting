@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CharactorShooter : MonoBehaviour
 {
-    [SerializeField] private GameObject[] _beamPool;
-    
     [SerializeField] private Transform _muzzlePoint;
     
     private readonly List<GameObject> _activeBeams = new List<GameObject>();
@@ -18,10 +16,6 @@ public class CharactorShooter : MonoBehaviour
     {
         _characterManager = GetComponent<CharacterManager>();
         _character = GetComponent<CharactorTeam>();
-        foreach (var projectile in _beamPool)
-        {
-            projectile.SetActive(false);
-        }
     }
 
     void Start()
@@ -62,19 +56,15 @@ public class CharactorShooter : MonoBehaviour
         }
         _characterManager.UseCharge(weaponData.EnergyCost);
         
-        for (int i = 0; i < _beamPool.Length; i++)
+        GameObject beamObj = BeamPoolManager.Instance.GetPooledBeam();
+        
+        if (beamObj != null)
         {
-            int index = (_poolIndex + i) % _beamPool.Length;
-            GameObject pooledObject = _beamPool[index];
+            // エネルギー消費はここで行うのが安全
+            _characterManager.UseCharge(weaponData.EnergyCost);
+            Debug.Log($"【{weaponData.GunName}】発射成功。");
 
-            if (!pooledObject.activeInHierarchy)
-            {
-                ActivateBeam(pooledObject, weaponData);
-                
-                _poolIndex = (index + 1) % _beamPool.Length;
-                
-                return;
-            }
+            ActivateBeam(beamObj, weaponData);
         }
     }
     
