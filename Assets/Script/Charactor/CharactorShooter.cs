@@ -54,6 +54,10 @@ public class CharactorShooter : MonoBehaviour
 
             ActivateBeam(beamObj, weaponData);
         }
+        else
+        {
+            Debug.LogError("弾がありません");
+        }
     }
     
     //弾の有効化と初期化
