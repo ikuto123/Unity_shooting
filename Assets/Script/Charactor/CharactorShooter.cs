@@ -18,11 +18,16 @@ public class CharactorShooter : MonoBehaviour
         _character = GetComponent<CharactorTeam>();
     }
     
-    private void OnEnable()
+    private void Start()
     {
-        if (_characterManager != null && _characterManager.WeaponManager != null)
+        // Startが呼ばれる時点では、他のコンポーネントのAwakeは完了していることが保証される
+        if (_characterManager?.WeaponManager != null)
         {
             _characterManager.WeaponManager.OnFireRequest += FireBeamObj;
+        }
+        else
+        {
+            Debug.LogError($"{gameObject.name}: WeaponManagerが見つかりません！", this);
         }
     }
 
@@ -37,6 +42,7 @@ public class CharactorShooter : MonoBehaviour
     //弾の発射処理
     private void FireBeamObj(WeaponBaseClass weaponData)
     {
+        Debug.Log("銃が発射します");
         if (_activeBeams.Count >= weaponData.MaxActiveBeam)
         {
             Debug.Log("発射制限数に達しているため、新しい弾を発射できません。");
