@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class PlayerMoveInput
 {
-    private float _moveSpeed = 5f;
+    private float _moveSpeed = 3f;
+    private float _strafeSpeedMultiplier = 0.5f;
     
     private Rigidbody _rb;
     private Vector3 _moveDirection;
@@ -12,6 +13,8 @@ public class PlayerMoveInput
         this._rb = rb;
     }
 
+    public Vector3 MoveDirection => _moveDirection;
+    
     public void ReadInput()
     {
         // 入力方向をリセット
@@ -20,6 +23,7 @@ public class PlayerMoveInput
         if (Input.GetKey(KeyCode.W))
         {
             _moveDirection += Vector3.forward; 
+            
         }
         if (Input.GetKey(KeyCode.S))
         {
@@ -42,14 +46,23 @@ public class PlayerMoveInput
     
     public void Movement()
     {
-        // _moveDirectionをプレイヤーのローカル座標系からワールド座標系に変換する
+// 適用する基本速度を決定
+        float currentSpeed = _moveSpeed;
+        
+        if (_moveDirection.z <= 0)
+        {
+            currentSpeed *= _strafeSpeedMultiplier;
+        }
+        
         Vector3 worldMoveDirection = _rb.transform.TransformDirection(_moveDirection);
-
-        // 変換されたワールド座標の方向を使って速度を計算する
-        // Y軸（垂直方向）の速度は現在のものを維持する
-        Vector3 targetVelocity = new Vector3(worldMoveDirection.x * _moveSpeed, _rb.linearVelocity.y, worldMoveDirection.z * _moveSpeed);
-
+        
+        Vector3 targetVelocity = new Vector3(worldMoveDirection.x * currentSpeed, _rb.linearVelocity.y, worldMoveDirection.z * currentSpeed);
         _rb.linearVelocity = targetVelocity;
+    }
+    
+    public void StopMovement()
+    {
+        _rb.linearVelocity = Vector3.zero;
     }
 }
 
