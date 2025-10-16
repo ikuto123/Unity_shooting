@@ -13,7 +13,7 @@ public abstract class WeaponBaseClass: IWeapon
     public float FireRate { get; private set; }
     public int MaxActiveBeam { get; private set; }
     
-    private float _nextFireTime = 0f;
+    protected float _nextFireTime = 0f;
     public WeaponBaseClass(int id, string name, int energyCost, 
         int damage, float beamSpeed, float beamLifetime, int maxActiveBeam,float fireRate)
     {

@@ -10,5 +10,13 @@ public class PlayerWeaponInput
         else if (Input.GetKeyDown(KeyCode.Alpha3)) { character.WeaponManager.SelectGun(3); }
         
         if (Input.GetMouseButton(0)) { character.WeaponManager?.FireCurrentGun(character); }
+        
+        if (Input.GetMouseButtonUp(0)) {if (Input.GetMouseButtonUp(0))
+        {
+            if (character.WeaponManager.CurrentGun is ChargeWeapon chargeWeapon)
+            {
+                chargeWeapon.CancelCharge();
+            }
+        } }
     }
 }
