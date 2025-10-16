@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBarPresenter
+public class HpBarPresenter
 {
     private readonly CharacterManager _model;
-    private readonly Slider _view;
+    private readonly Image _view;
 
     // 司令塔からモデルとビューを注入してもらう
-    public HealthBarPresenter(CharacterManager model, Slider view)
+    public HpBarPresenter(CharacterManager model, Image view)
     {
         _model = model;
         _view = view;
@@ -29,6 +29,7 @@ public class HealthBarPresenter
 
     private void UpdateHpBar(int currentHp, int maxHp)
     {
-        _view.value = (float)currentHp / maxHp;
+        Debug.Log("PlayerHP" + ((float)currentHp / maxHp));
+        _view.fillAmount = (float)currentHp / maxHp;
     }
 }
