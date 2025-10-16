@@ -1,10 +1,15 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
 public class AreaControl : MonoBehaviour
 {
+    public float TimeToWin => timeToWin;
+    public event Action<float, float> OnProgressUpdated;
+    
     private float timeToWin = 10.0f;
+    
     
     private float teamACaptureProgress = 0f;
     private float teamBCaptureProgress = 0f;
@@ -14,6 +19,7 @@ public class AreaControl : MonoBehaviour
     private bool isGameFinished = false;
     
     private float progressUpdateTimer = 0f;
+    
     
     private void OnTriggerEnter(Collider other)
     {
@@ -51,6 +57,8 @@ public class AreaControl : MonoBehaviour
         int teamACount = charactersInArea.Count(c => c.Team == Team.A);
         int teamBCount = charactersInArea.Count(c => c.Team == Team.B);
         
+        bool isProgressChanged = false;
+        
         if (teamACount > teamBCount)
         {
             progressUpdateTimer += Time.deltaTime;
@@ -61,6 +69,7 @@ public class AreaControl : MonoBehaviour
                 teamACaptureProgress += 1;
                 teamBCaptureProgress = 0;
                 Debug.Log($"Team A 占領中... Progress: {teamACaptureProgress} / {timeToWin}");
+                isProgressChanged = true;
             }
         }
         else if (teamBCount > teamACount)
@@ -73,6 +82,7 @@ public class AreaControl : MonoBehaviour
                 teamBCaptureProgress += 1;
                 teamACaptureProgress = 0;
                 Debug.Log($"Team B 占領中... Progress: {teamBCaptureProgress} / {timeToWin}");
+                isProgressChanged = true;
             }
         }
         else
@@ -81,6 +91,12 @@ public class AreaControl : MonoBehaviour
             teamBCaptureProgress = 0;
             progressUpdateTimer = 0f;
         }
+        
+        if(isProgressChanged)
+        {
+            OnProgressUpdated?.Invoke(teamACaptureProgress, teamBCaptureProgress);
+        }
+        
     }
     private void CheckForWin()
     {
