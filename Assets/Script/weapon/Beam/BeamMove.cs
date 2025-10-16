@@ -19,13 +19,23 @@ namespace Beam
 
         private void OnEnable()
         {
-            _rigidbody.linearVelocity = transform.forward * _speed;
+            UpdateVelocity();
+        }
+
+        // 進行方向を更新するためのメソッド
+        public void UpdateVelocity()
+        {
+            if(_rigidbody != null)
+                _rigidbody.linearVelocity = transform.forward * _speed;
         }
 
         private void OnDisable()
         {
-            _rigidbody.linearVelocity = Vector3.zero;
-            _rigidbody.angularVelocity = Vector3.zero;
+            if(_rigidbody != null)
+            {
+                _rigidbody.linearVelocity = Vector3.zero;
+                _rigidbody.angularVelocity = Vector3.zero;
+            }
         }
     }
 }
