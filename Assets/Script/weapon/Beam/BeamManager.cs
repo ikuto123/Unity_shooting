@@ -1,58 +1,63 @@
+// BeamManager.cs
+
 using System;
-using System.Collections; 
 using UnityEngine;
 
 namespace Beam
 {
-    public class BeamManager : MonoBehaviour ,ITeamAffiliated
+    public class BeamManager : MonoBehaviour, ITeamAffiliated
     {
         public int Damage { get; private set; }
         public Team Team { get; private set; }
         
-        private BeamMove _mover;
+        // 反射回数をカウントするプロパティ
+        public int BounceCount { get; set; }
+        
+        // 外部からBeamMoveにアクセスできるようにプロパティを追加
+        public BeamMove Mover { get; private set; }
         private BeamLifeTime _lifetime;
-        public BeamCollisionHandler CollisionHandler { get; private set; }
-
+        
         private Action<GameObject> _onDeactivatedCallback;
-
         private WeaponBaseClass _weaponData;
+
         private void Awake()
         {
-            _mover = GetComponent<BeamMove>();
+            Mover = GetComponent<BeamMove>();
             _lifetime = GetComponent<BeamLifeTime>();
-            CollisionHandler = GetComponent<BeamCollisionHandler>();
         }
 
-        public void Initialize(WeaponBaseClass weaponData,Team team, Action<GameObject> onDeactivatedCallback)
+        public void Initialize(WeaponBaseClass weaponData, Team team, Action<GameObject> onDeactivatedCallback)
         {
             _weaponData = weaponData;
             this.Team = team;
-            // データを設定
             _onDeactivatedCallback = onDeactivatedCallback;
 
-            // 各コンポーネントに初期化を命令
-            _mover.Initialize(weaponData.BeamSpeed);
+            // 初期化時に反射回数をリセット
+            this.BounceCount = 0;
+
+            Mover.Initialize(weaponData.BeamSpeed);
             _lifetime.StartLifetime(weaponData.BeamLifetime);
         }
 
-        public void ExecuteHitEffect(Collider other)
+        // 衝突時に呼ばれる新しいメソッド
+        public void OnCollision(Collision collision)
         {
-            if (other.gameObject.TryGetComponent<ITeamAffiliated>(out var targetAffiliation))
+            if (collision.gameObject.TryGetComponent<ITeamAffiliated>(out var targetAffiliation))
             {
                 if (targetAffiliation.Team == this.Team)
                 {
-                    return;
+                    DeActivate();
+                    return; 
                 }
             }
 
-            _weaponData?.HitEffect?.Execute(other, _weaponData);
-            DeActivate();
+            // 衝突時の振る舞いを、武器が持つHitEffectに完全に委譲する
+            _weaponData?.HitEffect?.Execute(this, collision, _weaponData);
         }
-        
-        // 衝突時や寿命で呼ばれる非アクティブ化メソッド
+
         public void DeActivate()
         {
-            if (!gameObject.activeSelf) return; // 既に非アクティブなら何もしない
+            if (!gameObject.activeSelf) return;
 
             _onDeactivatedCallback?.Invoke(gameObject);
             gameObject.SetActive(false);

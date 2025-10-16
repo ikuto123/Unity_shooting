@@ -1,6 +1,7 @@
+using Beam;
 using UnityEngine;
 
 public interface IHitEffect
 {
-    void Execute(Collider hitCollider, WeaponBaseClass weaponData);
+    void Execute(BeamManager beam,Collision collision, WeaponBaseClass weaponData);
 }
