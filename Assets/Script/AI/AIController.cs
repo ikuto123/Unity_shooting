@@ -9,7 +9,8 @@ namespace AIState
         public AIMovement Movement { get; private set; }
         public CharactorTeam MyTeam { get; private set; }
         public AICombat Combat { get; private set; }
-        
+        public CharactorAnimator CharacterAnimator { get; private set; }
+      
         private CharacterManager _characterManager;
         
         public float moveSpeed { get; private set; } 
@@ -26,11 +27,13 @@ namespace AIState
         public Transform targetEnemy { get; set; }
         public Vector3 targetAreaPosition { get; set; }
         public CharacterManager CharacterManager { get; private set; }
+        
         private void Awake()
         {
             CharacterManager = GetComponent<CharacterManager>();
             MyTeam = GetComponent<CharactorTeam>();
             _characterManager = GetComponent<CharacterManager>();
+            CharacterAnimator = GetComponentInChildren<CharactorAnimator>();
             CharacterSensor = new AICharacterSensor(this);
             Combat = new AICombat(this);
             Movement = new AIMovement(this);
