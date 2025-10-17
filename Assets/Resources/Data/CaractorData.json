@@ -1,5 +1,6 @@
 {
   "maxHp": 100,
   "maxCharge": 150,
-  "moveSpeed": 3.5
+  "moveSpeed": 3.5,
+  "respawnDelay": 5.0
 }

@@ -4,13 +4,15 @@ using System;
 public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IRecover
 {
     public WeaponManager WeaponManager { get; private set; }
-    
+    public bool isPlayer = false;
     public event Action<int, int> OnHpChanged;
     public event Action<int, int> OnChargeChanged;
     
     public int MaxHp { get; private set; }
     private int _currentHp;
     public float MoveSpeed { get; private set; }
+    public float RespawnDelay { get; private set; }
+    
     public int CurrentHp
     {
         get => _currentHp;
@@ -53,6 +55,8 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
         MaxCharge = initStats.maxCharge;
         CurrentHp = MaxHp;
         CurrentCharge = MaxCharge;
+        RespawnDelay = initStats.respawnDelay;
+        
     }
     
     public void ResetStatus()
@@ -88,9 +92,22 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
         Debug.Log($"{amount} チャージ回復！ 現在のチャージ: {CurrentCharge}");
     }
 
+    private void OnEnable()
+    {
+        // もしプレイヤーなら、カメラをプレイヤーカメラに戻す
+        if (isPlayer && GameManager.Instance != null)
+        {
+            GameManager.Instance.SwitchToPlayerCamera();
+        }
+    }
+    
     private void Die()
     {
         if (this == null) return;
+        if (isPlayer && GameManager.Instance != null)
+        {
+            GameManager.Instance.SwitchToStageCamera();
+        }
         transform.gameObject.SetActive(false);
         GameManager.Instance.SpawnManager.RequestRespawn(this);
         Debug.Log($"{gameObject.name} は倒れた。");
