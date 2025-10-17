@@ -15,18 +15,21 @@ namespace Beam
         public void Initialize(float speed)
         {
             _speed = speed;
+            if(this.gameObject.activeSelf) UpdateVelocity();
         }
 
         private void OnEnable()
         {
-            UpdateVelocity();
+            //UpdateVelocity();
         }
 
         // 進行方向を更新するためのメソッド
         public void UpdateVelocity()
         {
-            if(_rigidbody != null)
+            if (_rigidbody != null)
+            {
                 _rigidbody.linearVelocity = transform.forward * _speed;
+            }
         }
 
         private void OnDisable()
