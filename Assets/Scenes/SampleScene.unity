@@ -1735,9 +1735,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2075285158}
     m_Modifications:
+    - target: {fileID: 235143473885456796, guid: 2bbe00b7fcb7153448be6af803e5dda0, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647825018749022350, guid: 2bbe00b7fcb7153448be6af803e5dda0, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2779060739242980381, guid: 2bbe00b7fcb7153448be6af803e5dda0, type: 3}
       propertyPath: m_Name
       value: stage2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6002122782701209086, guid: 2bbe00b7fcb7153448be6af803e5dda0, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033521417293837345, guid: 2bbe00b7fcb7153448be6af803e5dda0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 26.4
       objectReference: {fileID: 0}
     - target: {fileID: 7538240834504936570, guid: 2bbe00b7fcb7153448be6af803e5dda0, type: 3}
       propertyPath: m_LocalScale.x
@@ -1794,6 +1810,10 @@ PrefabInstance:
     - target: {fileID: 7538240834504936570, guid: 2bbe00b7fcb7153448be6af803e5dda0, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7681454731429657621, guid: 2bbe00b7fcb7153448be6af803e5dda0, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7681454731429657621, guid: 2bbe00b7fcb7153448be6af803e5dda0, type: 3}
       propertyPath: m_IsActive
