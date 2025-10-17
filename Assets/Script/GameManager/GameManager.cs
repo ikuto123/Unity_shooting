@@ -1,13 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    [SerializeField] private CinemachineCamera playerCamera;
+    
+    [SerializeField] private CinemachineCamera stageCamera1;
+    [SerializeField] private CinemachineCamera stageCamera2;
 
-    // --- 各専門マネージャーへの参照 ---
     public CharacterSpawnManager SpawnManager { get; private set; }
     public OccupationManager OccupationManager { get; private set; }
     public RecoveryAreaManager RecoveryManager { get; private set; }
@@ -69,5 +71,30 @@ public class GameManager : MonoBehaviour
             // ゲーム終了処理などをここに記述
             Debug.Log("ゲーム終了！");
         }
+    }
+    
+    public void SwitchToStageCamera()
+    {
+        if (playerCamera != null) playerCamera.gameObject.SetActive(false);
+        int randomIndex = UnityEngine.Random.Range(0, 2);
+
+        if (randomIndex == 0)
+        {
+            if (stageCamera1 != null) stageCamera1.gameObject.SetActive(true);
+            if (stageCamera2 != null) stageCamera2.gameObject.SetActive(false);
+        }
+        else
+        {
+            if (stageCamera1 != null) stageCamera1.gameObject.SetActive(false);
+            if (stageCamera2 != null) stageCamera2.gameObject.SetActive(true);
+        }
+    }
+    
+    public void SwitchToPlayerCamera()
+    {
+        if (playerCamera != null) playerCamera.gameObject.SetActive(true);
+        
+        if (stageCamera1 != null) stageCamera1.gameObject.SetActive(false);
+        if (stageCamera2 != null) stageCamera2.gameObject.SetActive(false);
     }
 }

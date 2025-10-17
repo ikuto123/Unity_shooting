@@ -9,8 +9,7 @@ public class CharacterSpawnManager : MonoBehaviour
 
     [Header("キャラクターリスト")]
     [SerializeField] private List<GameObject> _charactersList;
-
-    private float _respawnDelay = 3.0f;
+    
     private float _spawnHeightOffset = 2f;
     private float _spawnAreaInset = 1.0f;
     
@@ -78,7 +77,7 @@ public class CharacterSpawnManager : MonoBehaviour
     // リスポーン処理
     private IEnumerator RespawnCoroutine(CharacterManager character)
     {
-        yield return new WaitForSeconds(_respawnDelay);
+        yield return new WaitForSeconds(character.RespawnDelay);
 
         if (_assignedSpawnPoints.TryGetValue(character.gameObject, out Transform spawnArea))
         {
