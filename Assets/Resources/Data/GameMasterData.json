@@ -1,3 +1,4 @@
 {
-  "gameDuration": 180
+  "gameDuration": 120,
+  "areaTimeToWin": 20
 }
