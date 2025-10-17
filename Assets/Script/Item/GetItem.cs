@@ -17,7 +17,7 @@ public class GetItem : MonoBehaviour
             Debug.Log(gameObject.name + " を取得した！");
 
             // --- ここにアイテム取得時の効果を記述 ---
-            //damageableObject.Heal(25);
+
             if (this._type == Itemtype.hart)
             {
                 Debug.Log("回復取得");
