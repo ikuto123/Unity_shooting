@@ -19,17 +19,23 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _gunSelectUI;
     [SerializeField] private Image _teamASlider;
     [SerializeField] private Image _teamBSlider;
+    [SerializeField] private GameObject PlayerDieTexts;
     [Header("リザルトビュー")]
     [SerializeField] private Image _PlayerWin;
     [SerializeField] private Image _PlayerLose;
     [SerializeField] private TextMeshProUGUI _DrawText;
-    
-    // 専門家チームのメンバー
+    [Header("死亡テキスト設定")]
+    [SerializeField] private GameObject _playerDieTextsGO; // GameObjectへの参照に変更
+    [SerializeField] private Color _darkRed = new Color(0.5f, 0, 0);
+    [SerializeField] private Color _lightRed = Color.red;
+    [SerializeField] private float _pulsateSpeed = 2f;
+   
     private HpBarPresenter _healthBarPresenter;
     private ChargeBarPresenter _chargeBarPresenter;
     private GunSelectPresenter _gunSelectPresenter;
     private AreaPresenter _areaPresenter;
     private ResultPresenter _resultPresenter;
+    private DeathTextPresenter _deathTextPresenter;
     
     private void Awake()
     {
@@ -40,6 +46,8 @@ public class UIManager : MonoBehaviour
 
         _areaPresenter = new AreaPresenter(_areaControl, _teamASlider, _teamBSlider);
         _resultPresenter = new ResultPresenter(_areaControl, _PlayerWin, _PlayerLose, _playerTeam.Team, _DrawText);
+        _deathTextPresenter = new DeathTextPresenter(
+            _characterManager, _playerDieTextsGO, this, _darkRed,_lightRed,_pulsateSpeed);
     }
 
     private void Start()
@@ -49,7 +57,9 @@ public class UIManager : MonoBehaviour
         _gunSelectPresenter.Enable();
         _areaPresenter.Enable();
         _resultPresenter.Enable();
+        _deathTextPresenter.Enable();
         _areaControl.OnGameEnd += HandleGameEnd;
+        
     }
 
     private void OnDisable()
@@ -60,6 +70,7 @@ public class UIManager : MonoBehaviour
         _gunSelectPresenter.Disable();
         _areaPresenter.Disable();
         _resultPresenter.Disable();
+        _deathTextPresenter.Disable();
         _areaControl.OnGameEnd -= HandleGameEnd;
     }
     

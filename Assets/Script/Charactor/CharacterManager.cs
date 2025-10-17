@@ -8,6 +8,8 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
     public event Action<int, int> OnHpChanged;
     public event Action<int, int> OnChargeChanged;
     
+    public event Action OnPlayerDied;
+    public event Action OnPlayerRespawned;
     public int MaxHp { get; private set; }
     private int _currentHp;
     public float MoveSpeed { get; private set; }
@@ -63,6 +65,11 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
     {
         CurrentHp = MaxHp;
         CurrentCharge = MaxCharge;
+        
+        if (isPlayer)
+        {
+            OnPlayerRespawned?.Invoke();
+        }
     }
 
     public void TakeDamage(int damage)
@@ -106,6 +113,7 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
         if (this == null) return;
         if (isPlayer && GameManager.Instance != null)
         {
+            OnPlayerDied?.Invoke();
             GameManager.Instance.SwitchToStageCamera();
         }
         transform.gameObject.SetActive(false);
