@@ -15,10 +15,6 @@ namespace Beam
         public void Initialize(float speed)
         {
             _speed = speed;
-        }
-
-        private void OnEnable()
-        {
             UpdateVelocity();
         }
 
