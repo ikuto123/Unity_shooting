@@ -16,7 +16,7 @@ public class PlayerInputController : MonoBehaviour
     [SerializeField] private CinemachineCamera _FPSCamera;
     
     private Transform _player;
-    private float _sensitivity = 2f;//カメラ感度
+    private float _sensitivity = 3f;//カメラ感度
     
     CharacterManager _characterManager;
     private void Start()
