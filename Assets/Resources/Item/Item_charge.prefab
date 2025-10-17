@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8717767318830534429}
   - component: {fileID: 2867633077747811400}
   - component: {fileID: 7266159330500686153}
+  - component: {fileID: -2915639823828409951}
   m_Layer: 0
   m_Name: Item_charge
   m_TagString: Untagged
@@ -121,3 +122,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af41370775498cd4ca2ed1106dd713f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2915639823828409951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4076498934706448353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b344ba5ca4e7ea347b13cf61ab0efa02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1

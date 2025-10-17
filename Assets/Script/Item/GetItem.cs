@@ -1,7 +1,14 @@
 using UnityEngine;
 
+public enum ItemType
+{
+    hart,
+    charge,
+}
 public class GetItem : MonoBehaviour
 {
+    [Header("アイテムの種類")]
+    [SerializeField] private ItemType type;
     private void OnTriggerEnter(Collider other)
     {
         // プレイヤーに接触したかどうかを判定
@@ -11,13 +18,13 @@ public class GetItem : MonoBehaviour
 
             // --- ここにアイテム取得時の効果を記述 ---
             //damageableObject.Heal(25);
-            if (this.gameObject.name == "Item_hart")
+            if (this.type == ItemType.hart)
             {
                 Debug.Log("回復取得");
                 damageableObject.RecoverHp(25);
             }
             
-            else if (this.gameObject.name == "Item_charge")
+            else if (this.type == ItemType.charge)
             {
                 Debug.Log("チャージ取得");
                 damageableObject.RecoverCharge(25);
