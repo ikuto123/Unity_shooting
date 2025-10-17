@@ -31,7 +31,6 @@ public class PlayerInputController : MonoBehaviour
     //プレイヤーからの入力を受け付けた処理
     private void Update()
     {
-        _playerWeaponInput.GunHolder(_characterManager);
         _cameraController.CameraRotation();
         
         if (Input.GetKey(KeyCode.LeftShift))
@@ -41,7 +40,7 @@ public class PlayerInputController : MonoBehaviour
             return;
         }
         if (Input.GetKeyUp(KeyCode.LeftShift)) { _playerAnimator.Squat(false); }
-        
+        _playerWeaponInput.GunHolder(_characterManager);
         _playerMoveInput.ReadInput();
         _playerAnimator.UpdateMovementAnimation(_playerMoveInput.MoveDirection);
         _cameraModeChanger.ChangeCameraMode();
