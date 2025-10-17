@@ -13,11 +13,12 @@ public class GameManager : MonoBehaviour
     public CharacterSpawnManager SpawnManager { get; private set; }
     public OccupationManager OccupationManager { get; private set; }
     public RecoveryAreaManager RecoveryManager { get; private set; }
+    public float AreaTimeToWin { get; private set; }
 
     [Header("ゲーム設定")]
     private float _remainingTime;
     private bool _isGameActive = false;
-    
+    public bool IsGameActive => _isGameActive;
     public event Action<float> OnTimeChanged;
     private void Awake()
     {
@@ -35,7 +36,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // 現場監督にキャラクターの配置を指示
         SpawnManager.SpawnCharacters();
     }
     
@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
         {
             GameSettingsData settings = JsonUtility.FromJson<GameSettingsData>(jsonTextAsset.text);
             _remainingTime = settings.gameDuration;
+            AreaTimeToWin = settings.areaTimeToWin;
             
         }
         else
@@ -68,8 +69,17 @@ public class GameManager : MonoBehaviour
         {
             _remainingTime = 0;
             _isGameActive = false;
-            // ゲーム終了処理などをここに記述
-            Debug.Log("ゲーム終了！");
+
+            // ★ 時間切れ：現在の占領進捗から勝者（または引き分け）を確定
+            var area = FindObjectOfType<AreaControl>();
+            if (area != null)
+            {
+                area.ForceEndByTimeUp();
+            }
+            else
+            {
+                Debug.LogWarning("AreaControlが見つからず、時間切れの勝敗判定を実行できませんでした。");
+            }
         }
     }
     
