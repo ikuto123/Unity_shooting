@@ -9,6 +9,7 @@ public class CharactorAnimator : MonoBehaviour
     private static readonly int IsWalkRightHash = Animator.StringToHash("IsWalkRight");
     private static readonly int IsWalkLeftHash = Animator.StringToHash("IsWalkLeft");
     private static readonly int IsFireHash = Animator.StringToHash("IsFire");
+    private static  readonly int IsWalkBackHash = Animator.StringToHash("IsWalkBack");
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -30,9 +31,9 @@ public class CharactorAnimator : MonoBehaviour
         bool isWalkingForward = localMoveDirection.z > 0.1f;
         _animator.SetBool(IsWalkHash, isWalkingForward);
         
-        //後ろ向け(予定)
-        /*bool isWalkingBack = localMoveDirection.z < -0.1f;
-        _animator.SetBool(IsWalkHash, isWalkingBack);*/
+        //後ろ向け
+        bool isWalkingBack = localMoveDirection.z < -0.1f;
+        _animator.SetBool(IsWalkBackHash, isWalkingBack);
 
         // 左右方向の移動 (X軸)
         bool isWalkingRight = localMoveDirection.x > 0.1f;

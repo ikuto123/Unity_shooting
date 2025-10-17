@@ -40,11 +40,21 @@ public class AIMovement
         if (!_navMeshAgent.hasPath || _navMeshAgent.isStopped)
         {
             _rigidbody.linearVelocity = new Vector3(0, _rigidbody.linearVelocity.y, 0);
+            if (_controller.CharacterAnimator != null)
+            {
+                _controller.CharacterAnimator.UpdateMovementAnimation(Vector3.zero);
+            }
             return;
         }
         
         Vector3 desiredVelocity = _navMeshAgent.velocity;
         _rigidbody.linearVelocity = new Vector3(desiredVelocity.x, _rigidbody.linearVelocity.y, desiredVelocity.z);
+        
+        if (_controller.CharacterAnimator != null)
+        {
+            Vector3 localVelocity = _controller.transform.InverseTransformDirection(desiredVelocity);
+            _controller.CharacterAnimator.UpdateMovementAnimation(localVelocity);
+        }
         
         Vector3 lookDirection = (_navMeshAgent.steeringTarget - _controller.transform.position).normalized;
         lookDirection.y = 0; 
@@ -60,6 +70,11 @@ public class AIMovement
         if (_navMeshAgent != null)
         {
             _navMeshAgent.isStopped = true;
+        }
+        
+        if (_controller.CharacterAnimator != null)
+        {
+            _controller.CharacterAnimator.UpdateMovementAnimation(Vector3.zero);
         }
     }
 }

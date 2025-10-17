@@ -13,6 +13,7 @@ public class AI_AttackingState : IState
     public void OnEnter()
     {
         _ai.Movement.Stop();
+        _ai.CharacterAnimator?.Fire(true);
         Debug.Log("攻撃状態に入りました！");
     }
 
@@ -57,6 +58,7 @@ public class AI_AttackingState : IState
 
     public void OnExit()
     {
+        _ai.CharacterAnimator?.Fire(false);
         Debug.Log("攻撃状態を終了します");
     }
 }
