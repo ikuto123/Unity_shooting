@@ -1,4 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace AIState
 {
@@ -12,6 +16,13 @@ namespace AIState
         public CharactorAnimator CharacterAnimator { get; private set; }
       
         private CharacterManager _characterManager;
+        
+        [Header("AI武器切り替え設定")]
+        private float _weaponSwitchCheckInterval = 7.0f;
+        private float _weaponChengeMinInterval = 5.0f;
+        private float _weaponChengeManInterval = 10.0f;
+        
+        private float _weaponSwitchTimer = 0f;
         
         public float moveSpeed { get; private set; } 
         
@@ -54,6 +65,8 @@ namespace AIState
         private void Update()
         {
             _currentState?.OnUpdate();
+            
+            HandleWeaponSwitching();
         }
         
         private void FixedUpdate()
@@ -61,11 +74,38 @@ namespace AIState
             Movement.Movement();
         }
 
+        
+        
         public void ChangeState(IState nextState)
         {
             _currentState?.OnExit();
             _currentState = nextState;
             _currentState.OnEnter();
+        }
+
+        private void HandleWeaponSwitching()
+        {
+            _weaponSwitchTimer += Time.deltaTime;
+
+            if (_weaponSwitchTimer >= _weaponSwitchCheckInterval)
+            {
+                _weaponSwitchTimer = 0f; 
+                _weaponSwitchCheckInterval = Random.Range(_weaponChengeMinInterval, _weaponChengeManInterval);
+                List<int> availableIDs = CharacterManager.WeaponManager.GetWeaponIDs();
+                
+                int currentWeaponID = CharacterManager.WeaponManager.GunID;
+                List<int> otherWeaponIDs = availableIDs.Where(id => id != currentWeaponID).ToList();
+
+                if (otherWeaponIDs.Count > 0)
+                {
+                    
+                    int randomIndex = Random.Range(0, otherWeaponIDs.Count);
+                    int newWeaponID = otherWeaponIDs[randomIndex];
+                    
+                    CharacterManager.WeaponManager.SelectGun(newWeaponID);
+                    Debug.Log($"{gameObject.name}が武器をID {newWeaponID} にランダムで切り替えました。");
+                }
+            }
         }
         
         //デバッグ用

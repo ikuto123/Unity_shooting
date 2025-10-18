@@ -83,6 +83,8 @@ public class WeaponManager
         _gunIDs.AddRange(_guns.Keys.OrderBy(id => id));
     }
 
+    public List<int> GetWeaponIDs() { return _gunIDs; }
+    
     public void SelectGun(int gunID)
     {
         if (_gunIDs.Contains(gunID))
