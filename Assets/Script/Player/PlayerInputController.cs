@@ -16,7 +16,7 @@ public class PlayerInputController : MonoBehaviour
     [SerializeField] private CinemachineCamera _FPSCamera;
     
     private Transform _player;
-    private float _sensitivity = 3f;//カメラ感度
+    private float _sensitivity = 3.5f;//カメラ感度
     
     CharacterManager _characterManager;
     private void Start()
@@ -40,6 +40,7 @@ public class PlayerInputController : MonoBehaviour
             return;
         }
         if (Input.GetKeyUp(KeyCode.LeftShift)) { _playerAnimator.Squat(false); }
+        
         _playerWeaponInput.GunHolder(_characterManager);
         _playerMoveInput.ReadInput();
         _playerAnimator.UpdateMovementAnimation(_playerMoveInput.MoveDirection);
