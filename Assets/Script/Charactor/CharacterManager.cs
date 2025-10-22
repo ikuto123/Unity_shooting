@@ -35,7 +35,7 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
         {
             _currentCharge = Mathf.Clamp(value, 0, MaxCharge);
             OnChargeChanged?.Invoke(_currentCharge, MaxCharge);
-            Debug.Log($"<color=cyan>Energy Updated:</color> {gameObject.name} の現在エネルギーは {_currentCharge} / {MaxCharge} です。");
+            //Debug.Log($"<color=cyan>Energy Updated:</color> {gameObject.name} の現在エネルギーは {_currentCharge} / {MaxCharge} です。");
         }
     }
 

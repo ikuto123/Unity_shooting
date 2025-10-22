@@ -33,23 +33,26 @@ public class PlayerInputController : MonoBehaviour
     {
         _cameraController.CameraRotation();
         
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftControl))
         { 
             _playerAnimator.Squat(true);
             _playerMoveInput.StopMovement();
             return;
         }
-        if (Input.GetKeyUp(KeyCode.LeftShift)) { _playerAnimator.Squat(false); }
+        if (Input.GetKeyUp(KeyCode.LeftControl)) { _playerAnimator.Squat(false); }
         
         _playerWeaponInput.GunHolder(_characterManager);
-        _playerMoveInput.ReadInput();
+        
+        _playerMoveInput.ReadInput(Input.GetKey(KeyCode.LeftShift));
+        
         _playerAnimator.UpdateMovementAnimation(_playerMoveInput.MoveDirection);
+        _playerAnimator.SetRun(_playerMoveInput.IsRunning);
         _cameraModeChanger.ChangeCameraMode();
     }
     
     private void FixedUpdate()
     {
-        if (!Input.GetKey(KeyCode.LeftShift))
+        if (!Input.GetKey(KeyCode.LeftControl))
         {
             _playerMoveInput.Movement();
         }

@@ -3,11 +3,13 @@ using UnityEngine;
 public class PlayerMoveInput
 {
     private float _moveSpeed = 3f;
+    private float _runSpeed = 6f;
     private float _strafeSpeedMultiplier = 0.5f;
     
     private Rigidbody _rb;
     private Vector3 _moveDirection;
-    
+
+    public bool IsRunning { get; private set; }
     public PlayerMoveInput(Rigidbody rb)
     {
         this._rb = rb;
@@ -15,39 +17,26 @@ public class PlayerMoveInput
 
     public Vector3 MoveDirection => _moveDirection;
     
-    public void ReadInput()
+    public void ReadInput(bool isRun)
     {
         // 入力方向をリセット
         _moveDirection = Vector3.zero;
         
-        if (Input.GetKey(KeyCode.W))
-        {
-            _moveDirection += Vector3.forward; 
+        if (Input.GetKey(KeyCode.W)) { _moveDirection += Vector3.forward; }
+        if (Input.GetKey(KeyCode.S)) { _moveDirection += Vector3.back; }
+        if (Input.GetKey(KeyCode.D)) { _moveDirection += Vector3.right; }
+        if (Input.GetKey(KeyCode.A)) { _moveDirection += Vector3.left; }
+
+        IsRunning = isRun && _moveDirection.magnitude > 0; 
             
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            _moveDirection += Vector3.back;    
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            _moveDirection += Vector3.right;  
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            _moveDirection += Vector3.left;  
-        }
+        if (_moveDirection.magnitude > 1) { _moveDirection = _moveDirection.normalized; }
         
-        if (_moveDirection.magnitude > 1)
-        {
-            _moveDirection = _moveDirection.normalized;
-        }
     }
     
     public void Movement()
     {
-// 適用する基本速度を決定
-        float currentSpeed = _moveSpeed;
+        // 適用する基本速度を決定
+        float currentSpeed = IsRunning ? _runSpeed : _moveSpeed;
         
         if (_moveDirection.z <= 0)
         {

@@ -10,6 +10,8 @@ public class CharactorAnimator : MonoBehaviour
     private static readonly int IsWalkLeftHash = Animator.StringToHash("IsWalkLeft");
     private static readonly int IsFireHash = Animator.StringToHash("IsFire");
     private static  readonly int IsWalkBackHash = Animator.StringToHash("IsWalkBack");
+    
+    private static readonly int IsRunHash = Animator.StringToHash("IsRun");
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -23,6 +25,11 @@ public class CharactorAnimator : MonoBehaviour
     public void Fire(bool isFiring)
     {
         _animator.SetBool(IsFireHash, isFiring);
+    }
+    
+    public void SetRun(bool isRunning)
+    {
+        _animator.SetBool(IsRunHash, isRunning);
     }
     
     public void UpdateMovementAnimation(Vector3 localMoveDirection)
