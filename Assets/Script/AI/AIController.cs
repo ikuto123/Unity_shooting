@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using GameScene;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace AIState
 {

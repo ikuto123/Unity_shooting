@@ -1,4 +1,5 @@
 using AIState;
+using GameScene;
 using UnityEngine;
 
 public class AI_ChargeWeaponState : IState

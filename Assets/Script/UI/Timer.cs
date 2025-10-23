@@ -1,3 +1,4 @@
+using GameScene;
 using TMPro;
 using UnityEngine;
 

@@ -1,4 +1,5 @@
 using System;
+using GameScene;
 using UnityEngine;
 
 public class RecoveryArea : MonoBehaviour
