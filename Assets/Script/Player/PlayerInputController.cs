@@ -5,6 +5,7 @@ public class PlayerInputController : MonoBehaviour
 {
     [SerializeField] private CharactorAnimator _playerAnimator;
     
+    private GameScene.GameManager _gameManager;
     private IPlayerAction _currentAction;
     private PlayerMoveInput _playerMoveInput;
     private PlayerWeaponInput _playerWeaponInput = new PlayerWeaponInput();
@@ -26,11 +27,21 @@ public class PlayerInputController : MonoBehaviour
         _cameraModeChanger = new CameraModeChanger(_MainPlayerCamera , _FPSCamera , _playerAnimator);
         _characterManager = GetComponent<CharacterManager>();
         _playerMoveInput = new PlayerMoveInput(GetComponent<Rigidbody>());
+        _gameManager = GameScene.GameManager.Instance;
     }
     
     //プレイヤーからの入力を受け付けた処理
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.M) && _gameManager.IsGameActive)
+        {
+            _gameManager.PauseMenu();
+        }
+        if (_gameManager != null && _gameManager.IsPaused)
+        {
+            return; 
+        }
+        
         _cameraController.CameraRotation();
         
         if (Input.GetKey(KeyCode.LeftControl))
@@ -52,6 +63,7 @@ public class PlayerInputController : MonoBehaviour
     
     private void FixedUpdate()
     {
+        if (_gameManager != null && _gameManager.IsPaused) { return; }
         if (!Input.GetKey(KeyCode.LeftControl))
         {
             _playerMoveInput.Movement();

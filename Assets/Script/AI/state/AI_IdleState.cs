@@ -12,7 +12,7 @@ public class AI_IdleState : IState
 
     public void OnEnter()
     {
-        Debug.Log("待機状態に入りました");
+        
     }
 
     public void OnUpdate()
@@ -23,6 +23,6 @@ public class AI_IdleState : IState
 
     public void OnExit()
     {
-        Debug.Log("待機状態を終了します");
+        
     }
 }

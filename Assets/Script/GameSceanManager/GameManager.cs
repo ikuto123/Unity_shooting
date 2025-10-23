@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Unity.Cinemachine;
 
@@ -21,7 +22,14 @@ namespace GameScene
         private bool _isGameActive = false;
         public bool IsGameActive => _isGameActive;
         public event Action<float> OnTimeChanged;
+        public event Action OnGameStart;
 
+        private float _startTimer = 5f;
+       
+        private bool _isPaused = false;
+        public bool IsPaused => _isPaused;
+        public event Action<bool> OnPauseStateChanged;
+        
         private void Awake()
         {
             if (Instance != null)
@@ -39,11 +47,32 @@ namespace GameScene
             OccupationManager = GetComponent<OccupationManager>();
 
             RecoveryManager = new RecoveryAreaManager();
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
-        private void Start()
+        private async void Start()
         {
+            await StartStandTimer();
             SpawnManager.SpawnCharacters();
+            
+        }
+
+        private async UniTask StartStandTimer()
+        {
+            OnTimeChanged?.Invoke(_startTimer);
+            _isGameActive = false; 
+            
+            while (_startTimer > 0)
+            {
+                _startTimer -= Time.deltaTime;
+                OnTimeChanged?.Invoke(_startTimer); 
+                
+                await UniTask.Yield(); 
+            }
+
+            OnTimeChanged?.Invoke(0f); 
+            OnGameStart?.Invoke();
+            _isGameActive = true;
         }
 
         private void LoadGameSettings()
@@ -64,12 +93,12 @@ namespace GameScene
 
         private void Update()
         {
-            if (!_isGameActive) return;
+            if (!_isGameActive || _isPaused) return;
 
             if (_remainingTime > 0)
             {
                 _remainingTime -= Time.deltaTime;
-                // ★ 時間が更新されたら、イベントを発行して通知する
+                
                 OnTimeChanged?.Invoke(_remainingTime);
             }
             else
@@ -77,7 +106,7 @@ namespace GameScene
                 _remainingTime = 0;
                 _isGameActive = false;
 
-                // ★ 時間切れ：現在の占領進捗から勝者（または引き分け）を確定
+                //現在の占領進捗から勝者を確定
                 var area = FindObjectOfType<AreaControl>();
                 if (area != null)
                 {
@@ -113,6 +142,29 @@ namespace GameScene
 
             if (stageCamera1 != null) stageCamera1.gameObject.SetActive(false);
             if (stageCamera2 != null) stageCamera2.gameObject.SetActive(false);
+        }
+
+
+        public void PauseMenu()
+        {
+            if (!_isGameActive) return;
+
+            _isPaused = !_isPaused;
+            
+            if (_isPaused)
+            {
+                Time.timeScale = 0f;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+
+                Time.timeScale = 1f;
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+            OnPauseStateChanged?.Invoke(_isPaused);
         }
     }
 }

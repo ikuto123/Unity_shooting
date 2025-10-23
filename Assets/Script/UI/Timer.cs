@@ -15,7 +15,7 @@ public class Timer : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.OnTimeChanged += UpdateTimerText;
-     }
+    }
     
     private void OnDisable()
     {

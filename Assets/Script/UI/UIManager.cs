@@ -1,7 +1,6 @@
-using System;
 using System.Collections;
+using GameScene;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private CharacterManager _characterManager;
     [SerializeField] private AreaControl _areaControl;
     [SerializeField] private CharactorTeam _playerTeam;
+    [SerializeField] private GameManager _gameManager;
 
     [Header("操作対象のビュー（UI要素）")]
     [SerializeField] private Image _hpSlider;
@@ -29,6 +29,19 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Color _darkRed = new Color(0.5f, 0, 0);
     [SerializeField] private Color _lightRed = Color.red;
     [SerializeField] private float _pulsateSpeed = 2f;
+
+    [Header("ゲームスタート待機テキスト")] 
+    [SerializeField] private GameObject _gameStartUI;
+    
+    [Header("ポーズメニュー")]
+    [SerializeField] private GameObject _pauseMenuPanel;
+    [SerializeField] private Button _restartButton;
+    [SerializeField] private Button _mapButton;
+    [SerializeField] private Button _titleButton;
+    [SerializeField] private Button _howToPlayButton;
+    [SerializeField] private Button _quitMapButton;
+    [SerializeField] private GameObject _mapPanel;
+    [SerializeField] private GameObject _howToPlayPanel;
    
     private HpBarPresenter _healthBarPresenter;
     private ChargeBarPresenter _chargeBarPresenter;
@@ -36,6 +49,7 @@ public class UIManager : MonoBehaviour
     private AreaPresenter _areaPresenter;
     private ResultPresenter _resultPresenter;
     private DeathTextPresenter _deathTextPresenter;
+    private MunuButtonPresenter _menuButtonPresenter;
     
     private void Awake()
     {
@@ -46,8 +60,9 @@ public class UIManager : MonoBehaviour
 
         _areaPresenter = new AreaPresenter(_areaControl, _teamASlider, _teamBSlider);
         _resultPresenter = new ResultPresenter(_areaControl, _PlayerWin, _PlayerLose, _playerTeam.Team, _DrawText);
-        _deathTextPresenter = new DeathTextPresenter(
-            _characterManager, _playerDieTextsGO, this, _darkRed,_lightRed,_pulsateSpeed);
+        _deathTextPresenter = new DeathTextPresenter(_characterManager, _playerDieTextsGO, this, _darkRed,_lightRed,_pulsateSpeed);
+        _menuButtonPresenter = new MunuButtonPresenter(_gameManager, _restartButton, _mapButton, _titleButton,_howToPlayButton, _quitMapButton, _mapPanel,_howToPlayPanel);
+        _pauseMenuPanel.SetActive(false);
     }
 
     private void Start()
@@ -58,7 +73,11 @@ public class UIManager : MonoBehaviour
         _areaPresenter.Enable();
         _resultPresenter.Enable();
         _deathTextPresenter.Enable();
+        _menuButtonPresenter.Enable();
+        _gameManager.OnPauseStateChanged += HandlePauseStateChanged;
         _areaControl.OnGameEnd += HandleGameEnd;
+        _gameManager.OnGameStart += HandleGameStarted;
+        _gameStartUI.SetActive(true);
         
     }
 
@@ -71,6 +90,7 @@ public class UIManager : MonoBehaviour
         _areaPresenter.Disable();
         _resultPresenter.Disable();
         _deathTextPresenter.Disable();
+        _menuButtonPresenter.Disable();
         _areaControl.OnGameEnd -= HandleGameEnd;
     }
     
@@ -87,5 +107,21 @@ public class UIManager : MonoBehaviour
         // 次のシーンへ行く前に時刻を戻す
         Time.timeScale = 1f;
         SceneManager.LoadScene("Title");
+    }
+    
+    private void HandleGameStarted()
+    {
+        if (_gameStartUI != null)
+        {
+            _gameStartUI.SetActive(false);
+        }
+    }
+    
+    private void HandlePauseStateChanged(bool isPaused)
+    {
+        if (_pauseMenuPanel != null)
+        {
+            _pauseMenuPanel.SetActive(isPaused);
+        }
     }
 }
