@@ -21,7 +21,6 @@ public class RecoveryArea : MonoBehaviour
             teamAffiliation.Team == _targetTeam &&
             other.gameObject.TryGetComponent<IRecover>(out var recoverTarget))
         {
-            Debug.Log("Recovery");
             recoverTarget.RecoverHp(_HPamount);
             recoverTarget.RecoverCharge(_Chargeamount);
         }

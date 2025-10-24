@@ -33,30 +33,24 @@ public class AI_ChargeWeaponState : IState
             // 回復エリアが見つからなかった場合の予備の行動
             _ai.ChangeState(new AI_MoveToTargetAreaState(_ai));
         }
-        
-        Debug.Log("攻撃状態に入りました！");
     }
 
     public void OnUpdate()
     {
         if (_targetRecoveryArea == null) return;
         
-        if (Vector3.Distance(_ai.transform.position, _targetRecoveryArea.position) < arrivalDistance) 
+        //キャラクターのエネルギーが最大値に達したら
+        if (_ai.CharacterManager.CurrentCharge >= _ai.CharacterManager.MaxCharge)
         {
-            // キャラクターのエネルギーが最大値に達したら
-            if (_ai.CharacterManager.CurrentCharge >= _ai.CharacterManager.MaxCharge)
-            {
-                Debug.Log("エネルギーが満タンになったので、索敵に戻ります。");
-                _ai.ChangeState(new AI_MoveToTargetAreaState(_ai));
-            }
+            Debug.Log("エネルギーが満タンになったので、索敵に戻ります。");
+            _ai.ChangeState(new AI_MoveToTargetAreaState(_ai));
         }
+        
 
     }
 
     public void OnExit()
     {
-        
         _targetRecoveryArea = null;
-        Debug.Log("攻撃状態を終了します");
     }
 }

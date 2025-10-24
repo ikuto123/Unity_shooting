@@ -36,7 +36,6 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
         {
             _currentCharge = Mathf.Clamp(value, 0, MaxCharge);
             OnChargeChanged?.Invoke(_currentCharge, MaxCharge);
-            //Debug.Log($"<color=cyan>Energy Updated:</color> {gameObject.name} の現在エネルギーは {_currentCharge} / {MaxCharge} です。");
         }
     }
 
@@ -59,7 +58,6 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
         CurrentHp = MaxHp;
         CurrentCharge = MaxCharge;
         RespawnDelay = initStats.respawnDelay;
-        
     }
     
     public void ResetStatus()
@@ -86,7 +84,6 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
             return;
         }
         CurrentHp += amount;
-        Debug.Log($"{amount} HP回復！ 現在のHP: {CurrentHp}");
     }
     
     public void RecoverCharge(int amount)
@@ -97,12 +94,10 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
             return;
         }
         CurrentCharge += amount;
-        Debug.Log($"{amount} チャージ回復！ 現在のチャージ: {CurrentCharge}");
     }
 
     private void OnEnable()
     {
-        // もしプレイヤーなら、カメラをプレイヤーカメラに戻す
         if (isPlayer && GameManager.Instance != null)
         {
             GameManager.Instance.SwitchToPlayerCamera();
@@ -119,7 +114,6 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
         }
         transform.gameObject.SetActive(false);
         GameManager.Instance.SpawnManager.RequestRespawn(this);
-        Debug.Log($"{gameObject.name} は倒れた。");
     }
     
     //エネルギーがあるかの確認

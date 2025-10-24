@@ -8,10 +8,11 @@ namespace GameScene
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
-        [SerializeField] private CinemachineCamera playerCamera;
+        [SerializeField] private CinemachineCamera _playerCamera;
 
-        [SerializeField] private CinemachineCamera stageCamera1;
-        [SerializeField] private CinemachineCamera stageCamera2;
+        [SerializeField] private CinemachineCamera _stageCamera1;
+        [SerializeField] private CinemachineCamera _stageCamera2;
+        [SerializeField] private AudioSource _worldSource;
 
         public CharacterSpawnManager SpawnManager { get; private set; }
         public OccupationManager OccupationManager { get; private set; }
@@ -53,10 +54,11 @@ namespace GameScene
         private async void Start()
         {
             await StartStandTimer();
+            _worldSource.Play();
             SpawnManager.SpawnCharacters();
-            
         }
-
+        
+        
         private async UniTask StartStandTimer()
         {
             OnTimeChanged?.Invoke(_startTimer);
@@ -121,27 +123,27 @@ namespace GameScene
 
         public void SwitchToStageCamera()
         {
-            if (playerCamera != null) playerCamera.gameObject.SetActive(false);
+            if (_playerCamera != null) _playerCamera.gameObject.SetActive(false);
             int randomIndex = UnityEngine.Random.Range(0, 2);
 
             if (randomIndex == 0)
             {
-                if (stageCamera1 != null) stageCamera1.gameObject.SetActive(true);
-                if (stageCamera2 != null) stageCamera2.gameObject.SetActive(false);
+                if (_stageCamera1 != null) _stageCamera1.gameObject.SetActive(true);
+                if (_stageCamera2 != null) _stageCamera2.gameObject.SetActive(false);
             }
             else
             {
-                if (stageCamera1 != null) stageCamera1.gameObject.SetActive(false);
-                if (stageCamera2 != null) stageCamera2.gameObject.SetActive(true);
+                if (_stageCamera1 != null) _stageCamera1.gameObject.SetActive(false);
+                if (_stageCamera2 != null) _stageCamera2.gameObject.SetActive(true);
             }
         }
 
         public void SwitchToPlayerCamera()
         {
-            if (playerCamera != null) playerCamera.gameObject.SetActive(true);
+            if (_playerCamera != null) _playerCamera.gameObject.SetActive(true);
 
-            if (stageCamera1 != null) stageCamera1.gameObject.SetActive(false);
-            if (stageCamera2 != null) stageCamera2.gameObject.SetActive(false);
+            if (_stageCamera1 != null) _stageCamera1.gameObject.SetActive(false);
+            if (_stageCamera2 != null) _stageCamera2.gameObject.SetActive(false);
         }
 
 

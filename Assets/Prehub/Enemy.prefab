@@ -206,11 +206,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _team: 0
-  _teamAColor: {r: 0.2, g: 0.4, b: 1, a: 1}
-  _teamBColor: {r: 1, g: 0.3, b: 1, a: 1}
-  _targetMaterialIndices: 
-  _colorPropertyName: _BaseColor
-  _targetRenderer: {fileID: 6634449208447835158}
 --- !u!114 &1857383570185879004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _muzzlePoint: {fileID: 8298167317339959006}
+  _fireSound: {fileID: 11400000, guid: ae993f64c1464504ca745b8940dfa4f4, type: 2}
 --- !u!195 &4899439787933507678
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -674,7 +670,7 @@ PrefabInstance:
     - target: {fileID: 7926758097220510030, guid: 6b6ae4a365e733f4f9826c11a9e413dc, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 34be43aa5fe9aef4b97d952bfeb168ad, type: 2}
+      objectReference: {fileID: 2100000, guid: 942eb102c623b924e829d900f6f8a5da, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3288442999595253100, guid: 6b6ae4a365e733f4f9826c11a9e413dc, type: 3}
@@ -697,11 +693,6 @@ PrefabInstance:
 --- !u!4 &4409137083207305278 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1090903326464341350, guid: 6b6ae4a365e733f4f9826c11a9e413dc, type: 3}
-  m_PrefabInstance: {fileID: 3608452141189971288}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &6634449208447835158 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 7926758097220510030, guid: 6b6ae4a365e733f4f9826c11a9e413dc, type: 3}
   m_PrefabInstance: {fileID: 3608452141189971288}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &6948184960868843001 stripped

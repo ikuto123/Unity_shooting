@@ -20,8 +20,8 @@ public class CharacterSpawnManager : MonoBehaviour
         if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
     }
-
-    // 初期スポーン
+    
+    //初期スポーン
     public void SpawnCharacters()
     {
         var spawnPointsByTeam = FindObjectsOfType<TeamSpawnPoint>()
@@ -41,14 +41,14 @@ public class CharacterSpawnManager : MonoBehaviour
         {
             GameObject character = _charactersList[i];
             Transform spawnArea = null;
-
-            if (i % 2 == 0) // TeamA
+            
+            if (i % 2 == 0) //TeamA
             {
                 character.GetComponent<CharactorTeam>().Initialize(Team.A);
                 spawnArea = teamASpawnPoints[teamACount % teamASpawnPoints.Count];
                 teamACount++;
             }
-            else // TeamB
+            else //TeamB
             {
                 character.GetComponent<CharactorTeam>().Initialize(Team.B);
                 spawnArea = teamBSpawnPoints[teamBCount % teamBSpawnPoints.Count];
@@ -68,13 +68,13 @@ public class CharacterSpawnManager : MonoBehaviour
         }
     }
 
-    // リスポーン要求を受け付ける
+    //リスポーン要求を受け付ける
     public void RequestRespawn(CharacterManager character)
     {
         StartCoroutine(RespawnCoroutine(character));
     }
 
-    // リスポーン処理
+    //リスポーン処理
     private IEnumerator RespawnCoroutine(CharacterManager character)
     {
         yield return new WaitForSeconds(character.RespawnDelay);

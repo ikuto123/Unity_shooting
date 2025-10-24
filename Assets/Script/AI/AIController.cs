@@ -60,6 +60,16 @@ namespace AIState
                 targetAreaPosition = GameManager.Instance.OccupationManager.GetTargetAreaPosition();
             }
         }
+        private void OnEnable()
+        {
+            targetEnemy = null;
+            
+            if (GameManager.Instance != null)
+            {
+                targetAreaPosition = GameManager.Instance.OccupationManager.GetTargetAreaPosition();
+            }
+            ChangeState(new AI_MoveToTargetAreaState(this));
+        }
 
         private void Update()
         {
