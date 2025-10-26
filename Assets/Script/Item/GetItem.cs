@@ -11,13 +11,11 @@ public class GetItem : MonoBehaviour
     [SerializeField] private Itemtype _type;
     private void OnTriggerEnter(Collider other)
     {
-        // プレイヤーに接触したかどうかを判定
+        //プレイヤーに接触したかどうかを判定
         if (other.gameObject.TryGetComponent<IRecover>(out var damageableObject))
         {
             Debug.Log(gameObject.name + " を取得した！");
-
-            // --- ここにアイテム取得時の効果を記述 ---
-
+            
             if (this._type == Itemtype.hart)
             {
                 Debug.Log("回復取得");

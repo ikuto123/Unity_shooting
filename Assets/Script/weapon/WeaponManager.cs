@@ -25,24 +25,24 @@ public class WeaponManager
             return null;
         }
     }
-
-    // コンストラクタをpublicに変更
+    
     public WeaponManager()
     {
         InitializeGuns();
         if (_guns.Count > 0)
         {
-            // デフォルトで最初の武器を選択
+            //初期は最初の武器を選択
             SelectGun(_gunIDs[0]);
         }
     }
     
+    //Jsonから銃のデータを読み込み
     private void InitializeGuns()
     {
         var jsonTextAsset = Resources.Load<TextAsset>("Data/WeaponsData");
         if (jsonTextAsset == null)
         {
-            Debug.LogError("Weapon data file not found at 'Resources/Data/WeaponsData'");
+            Debug.LogError("データがありません'Resources/Data/WeaponsData'");
             return;
         }
         
@@ -72,12 +72,12 @@ public class WeaponManager
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"Failed to create instance of {weaponData.className}: {e.Message}");
+                    Debug.LogError($"インスタンスの作成に失敗しました {weaponData.className}: {e.Message}");
                 }
             }
             else
             {
-                Debug.LogError($"Invalid or not found weapon class name: {weaponData.className}");
+                Debug.LogError($"武器クラス名が見つかりません: {weaponData.className}");
             }
         }
         _gunIDs.AddRange(_guns.Keys.OrderBy(id => id));
@@ -85,17 +85,18 @@ public class WeaponManager
 
     public List<int> GetWeaponIDs() { return _gunIDs; }
     
+    //どの銃を選択しているのか
     public void SelectGun(int gunID)
     {
         if (_gunIDs.Contains(gunID))
         {
             _currentGunID = gunID;
             var gun = CurrentGun;
-            //Debug.Log($"ID {gunID} の {gun.GunName} を選択しました。");
             OnGunSwitched?.Invoke(_currentGunID, gun.GunName);
         }
     }
 
+    //現在の銃を発射する
     public void FireCurrentGun(IChargeable user)
     {
         var gun = CurrentGun;
@@ -109,7 +110,7 @@ public class WeaponManager
         }
         else
         {
-            Debug.Log("装備している銃がありません。");
+            Debug.LogError("装備している銃がありません。");
         }
     }
 }

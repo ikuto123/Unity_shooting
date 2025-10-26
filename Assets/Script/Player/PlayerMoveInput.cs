@@ -18,9 +18,9 @@ public class PlayerMoveInput
 
     public Vector3 MoveDirection => _moveDirection;
     
+    //移動に関する入力処理
     public void ReadInput(bool isRun)
     {
-        //入力方向をリセット
         _moveDirection = Vector3.zero;
         
         if (Input.GetKey(KeyCode.W)) { _moveDirection += Vector3.forward; }
@@ -34,9 +34,10 @@ public class PlayerMoveInput
         
     }
     
+    //実際の移動処理
     public void Movement()
     {
-        // 適用する基本速度を決定
+        //適用する基本速度を決定
         float currentSpeed = IsRunning ? _runSpeed : _moveSpeed;
         
         if (_moveDirection.z <= 0)
@@ -50,6 +51,7 @@ public class PlayerMoveInput
         _rb.linearVelocity = targetVelocity;
     }
     
+    //動きを止める
     public void StopMovement()
     {
         _rb.linearVelocity = Vector3.zero;

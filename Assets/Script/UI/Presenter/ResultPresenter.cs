@@ -34,14 +34,14 @@ public class ResultPresenter
    
     private void ShowResult(Team? winningTeam) 
     {
-        // まず全て消す
+        //全て消す
         if (_playerWinPanel) _playerWinPanel.gameObject.SetActive(false);
         if (_playerLosePanel) _playerLosePanel.gameObject.SetActive(false);
         if (_drawText) _drawText.gameObject.SetActive(false);
 
         if (winningTeam == null)
         {
-            // ★ 引き分け
+            //引き分け
             if (_drawText)
             {
                 _drawText.text = "引き分け";
@@ -51,7 +51,7 @@ public class ResultPresenter
             return;
         }
 
-        // 勝敗
+        //勝敗
         if (winningTeam == _playerTeam)
         {
             if (_playerWinPanel) _playerWinPanel.gameObject.SetActive(true);

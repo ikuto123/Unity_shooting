@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class MouseInput
 {
-    private float _InputX;
-    private float _InputY;
+    private float _inputX;
+    private float _inputY;
 
     public Vector3 MouseInputDistance()
     {
-        _InputX = Input.GetAxis("Mouse X");
-        _InputY = Input.GetAxis("Mouse Y");
-        return new Vector3(_InputX, _InputY, 0);
+        _inputX = Input.GetAxis("Mouse X");
+        _inputY = Input.GetAxis("Mouse Y");
+        return new Vector3(_inputX, _inputY, 0);
     }
 }

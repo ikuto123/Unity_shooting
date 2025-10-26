@@ -5,7 +5,6 @@ public class AreaPresenter
 {
     private readonly AreaControl _areaControl;
     
-    // View
     private readonly Image _teamASlider;
     private readonly Image _teamBSlider;
 
@@ -15,7 +14,7 @@ public class AreaPresenter
         _teamASlider = teamASlider;
         _teamBSlider = teamBSlider;
         
-        // スライダーの最大値を設定
+        //スライダーの最大値を設定
         _teamASlider.fillAmount = _areaControl.TimeToWin;
         _teamBSlider.fillAmount = _areaControl.TimeToWin;
     }

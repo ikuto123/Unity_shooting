@@ -42,13 +42,15 @@ public class CharacterSpawnManager : MonoBehaviour
             GameObject character = _charactersList[i];
             Transform spawnArea = null;
             
-            if (i % 2 == 0) //TeamA
+            //TeamA
+            if (i % 2 == 0)
             {
                 character.GetComponent<CharactorTeam>().Initialize(Team.A);
                 spawnArea = teamASpawnPoints[teamACount % teamASpawnPoints.Count];
                 teamACount++;
             }
-            else //TeamB
+            //TeamB
+            else 
             {
                 character.GetComponent<CharactorTeam>().Initialize(Team.B);
                 spawnArea = teamBSpawnPoints[teamBCount % teamBSpawnPoints.Count];
@@ -87,8 +89,6 @@ public class CharacterSpawnManager : MonoBehaviour
 
             character.ResetStatus();
             character.gameObject.SetActive(true);
-            
-            Debug.Log($"<color=lime>{character.name} をリスポーンさせました。</color>");
         }
     }
     

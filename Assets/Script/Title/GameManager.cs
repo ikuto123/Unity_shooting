@@ -7,7 +7,7 @@ namespace Taitle
     {
         public static GameManager Instance { get; private set; }
         
-        [SerializeField] private GameObject _HowToPlayUI;
+        [SerializeField] private GameObject _howToPlayUI;
         
         void Awake()
         {
@@ -15,11 +15,6 @@ namespace Taitle
             {
                 Instance = this;
                 
-                DontDestroyOnLoad(gameObject); 
-            }
-            else
-            {
-                Destroy(gameObject);
             }
 
             Cursor.lockState = CursorLockMode.None;
@@ -33,13 +28,13 @@ namespace Taitle
 
         public void HowToPlay()
         {
-            _HowToPlayUI.gameObject.SetActive(true);
+            _howToPlayUI.gameObject.SetActive(true);
             
         }
 
         public void QuitHowToPlay()
         {
-            _HowToPlayUI.gameObject.SetActive(false);
+            _howToPlayUI.gameObject.SetActive(false);
         }
         
         public void QuitGame()

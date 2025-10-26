@@ -5,7 +5,7 @@ using GameScene;
 public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IRecover
 {
     public WeaponManager WeaponManager { get; private set; }
-    public bool isPlayer = false;
+    public bool IsPlayer = false;//ヒエラルキー上でプレイヤーかどうかを設定 
     public event Action<int, int> OnHpChanged;
     public event Action<int, int> OnChargeChanged;
     
@@ -41,6 +41,10 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
 
     private void Awake()
     {
+        //念のためプレイヤーかどうかを確認
+        if(TryGetComponent<PlayerInputController>(out var playerInput)) { IsPlayer = true; }
+        else { IsPlayer = false; }
+        
         WeaponManager = new WeaponManager();
         SetInitData();
     }
@@ -60,22 +64,25 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
         RespawnDelay = initStats.respawnDelay;
     }
     
+    //ステータスのリセット
     public void ResetStatus()
     {
         CurrentHp = MaxHp;
         CurrentCharge = MaxCharge;
         
-        if (isPlayer)
+        if (IsPlayer)
         {
             OnPlayerRespawned?.Invoke();
         }
     }
-
+    
+    //ダメージを受けた際に呼び出す
     public void TakeDamage(int damage)
     {
         CurrentHp -= damage;
     }
     
+    //回復した際に呼び出す
     public void RecoverHp(int amount)
     {
         if (CurrentHp >= MaxHp)
@@ -86,6 +93,7 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
         CurrentHp += amount;
     }
     
+    //エネルギー回復した際に呼び出す
     public void RecoverCharge(int amount)
     {
         if (CurrentCharge >= MaxCharge)
@@ -96,18 +104,20 @@ public class CharacterManager : MonoBehaviour, IChargeable , IDamageable , IReco
         CurrentCharge += amount;
     }
 
+    //カメラをステージのカメラからPlayerのカメラに切り替え
     private void OnEnable()
     {
-        if (isPlayer && GameManager.Instance != null)
+        if (IsPlayer && GameManager.Instance != null)
         {
             GameManager.Instance.SwitchToPlayerCamera();
         }
     }
     
+    //キャラクターが死亡した際に呼び出す
     private void Die()
     {
         if (this == null) return;
-        if (isPlayer && GameManager.Instance != null)
+        if (IsPlayer && GameManager.Instance != null)
         {
             OnPlayerDied?.Invoke();
             GameManager.Instance.SwitchToStageCamera();

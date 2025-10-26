@@ -6,6 +6,7 @@ public class RecoveryAreaManager
 {
     private Dictionary<Team, List<RecoveryArea>> _recoveryAreasByTeam = new Dictionary<Team, List<RecoveryArea>>();
 
+    //リカバリーエリアを登録
     public void RegisterRecoveryArea(Team team, RecoveryArea area)
     {
         if (!_recoveryAreasByTeam.ContainsKey(team))
@@ -17,6 +18,7 @@ public class RecoveryAreaManager
 
     public RecoveryArea GetClosestRecoveryArea(Team team, Vector3 position)
     {
+        //キーを参照してどちらのチームのリカバリーエリアかを判断
         if (_recoveryAreasByTeam.ContainsKey(team) && _recoveryAreasByTeam[team].Count > 0)
         {
             return _recoveryAreasByTeam[team]

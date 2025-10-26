@@ -19,18 +19,15 @@ public class AI_ChargeWeaponState : IState
         
         if (closestArea != null)
         {
-            // 見つかったエリアを目標に設定
+            //見つかった回復エリアを目標に設定
             _targetRecoveryArea = closestArea.transform;
             
-            // 回復エリアの位置を目的地として移動を開始
             _ai.Movement.SetTarget(_targetRecoveryArea.position);
             
-            Debug.Log("目標の回復エリアを設定: " + _targetRecoveryArea.name);
         }
         else
         {
-            Debug.LogWarning("回復エリアが見つかりませんでした。索敵状態に戻ります。");
-            // 回復エリアが見つからなかった場合の予備の行動
+            //回復エリアが見つからなかった場合は索敵に戻る
             _ai.ChangeState(new AI_MoveToTargetAreaState(_ai));
         }
     }
@@ -39,10 +36,9 @@ public class AI_ChargeWeaponState : IState
     {
         if (_targetRecoveryArea == null) return;
         
-        //キャラクターのエネルギーが最大値に達したら
+        //エネルギーが最大値に達した場合の行動
         if (_ai.CharacterManager.CurrentCharge >= _ai.CharacterManager.MaxCharge)
         {
-            Debug.Log("エネルギーが満タンになったので、索敵に戻ります。");
             _ai.ChangeState(new AI_MoveToTargetAreaState(_ai));
         }
         

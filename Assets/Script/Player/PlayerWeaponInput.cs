@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class PlayerWeaponInput
 {
+    //銃に関する入力処理
     public void GunHolder(CharacterManager character)
     {
-        //Debug.Log("GunHolder is called. Frame: " + Time.frameCount);
         if (Input.GetKeyDown(KeyCode.Alpha1)) { character.WeaponManager.SelectGun(1); }
         else if (Input.GetKeyDown(KeyCode.Alpha2)) { character.WeaponManager.SelectGun(2); }
         else if (Input.GetKeyDown(KeyCode.Alpha3)) { character.WeaponManager.SelectGun(3); }

@@ -39,6 +39,7 @@ public class HowToPlayUI : MonoBehaviour
         
     }
 
+    //ページがスライドする処理
     private async UniTask SlideTimer(float CurrentPagePosX)
     {
         Vector2 startPosition = _pagePearent.transform.localPosition;
@@ -60,7 +61,7 @@ public class HowToPlayUI : MonoBehaviour
         _isSliding = true;
         UpdateArrowButton();
     }
-
+    
     public void OnRightArrowClick()
     {
         TargetPagePos += -1880;
@@ -75,6 +76,7 @@ public class HowToPlayUI : MonoBehaviour
         StartSlide();
     }
     
+    //矢印ボタンが押せるかどうか
     private void UpdateArrowButton()
     {
         if (!_isSliding)

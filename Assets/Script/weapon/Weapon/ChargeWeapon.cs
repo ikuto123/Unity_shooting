@@ -4,7 +4,7 @@ public class ChargeWeapon : WeaponBaseClass
 {
     private bool _isCharging = false;
     private float _chargeStartTime = 0f;
-    private readonly float _requiredChargeTime = 0.7f;//チャージに必要な時間
+    private readonly float _requiredChargeTime = 0.7f;
     
     private float _chargeDuration = 0f;
     public ChargeWeapon(int id, string name, int energyCost, int damage,
@@ -31,7 +31,6 @@ public class ChargeWeapon : WeaponBaseClass
             //チャージ開始
             _isCharging = true;
             _chargeStartTime = Time.time;
-            Debug.Log("チャージ開始！");
             return false; 
         }
         
@@ -43,17 +42,9 @@ public class ChargeWeapon : WeaponBaseClass
             return false;
         }
         
-        Debug.Log("チャージ完了！発射します。");
-        
         bool canFire = base.Fire(user);
         
         ResetCharge();
-
-        if (canFire)
-        {
-            Debug.Log($"{GunName} を発射！");
-        }
-
         return canFire;
         
     }
@@ -66,6 +57,7 @@ public class ChargeWeapon : WeaponBaseClass
         }
     }
 
+    //チャージ状態をリセット
     private void ResetCharge()
     {
         _isCharging = false;

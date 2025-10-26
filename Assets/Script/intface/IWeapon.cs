@@ -4,7 +4,7 @@ public interface IWeapon
     string GunName { get; }
     int EnergyCost { get; }
     
-    float BeamSpeed { get; }    // 追加
-    float BeamLifetime { get; } // 追加
+    float BeamSpeed { get; }    
+    float BeamLifetime { get; } 
     bool Fire(IChargeable user);
 }

@@ -6,7 +6,7 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance { get; private set; }
     
-    [Header("2D Audio Source")]
+    [Header("2DAudioSource")]
     [SerializeField] private AudioSource _Source_2D;
     
     private Queue<AudioSource> _audioSourcePool = new Queue<AudioSource>();
@@ -45,6 +45,7 @@ public class SoundManager : MonoBehaviour
         }
     }
     
+    //どこからでも同じように聞こえるサウンド
     public void PlaySE_2D(SoundData soundData)
     {
         if (soundData == null || soundData.clip == null) return;
@@ -52,6 +53,7 @@ public class SoundManager : MonoBehaviour
         _Source_2D.PlayOneShot(soundData.clip, soundData.volume);
     }
     
+    //位置によって聞こえ方が変わるサウンド
     public void PlaySE_3D(SoundData soundData, Vector3 position, float pitchRange = 0.05f)
     {
         if (soundData == null || soundData.clip == null) return;
@@ -63,7 +65,6 @@ public class SoundManager : MonoBehaviour
             Debug.LogWarning("3Dオーディオソースのプールが枯渇しました。PoolSizeを大きくしてください。");
             return;
         }
-
         
         Play3DSound(source, soundData, position, pitchRange).Forget();
     }
@@ -76,9 +77,9 @@ public class SoundManager : MonoBehaviour
         return null;
     }
     
+    //サウンドの再生と終了処理
     private async UniTask Play3DSound(AudioSource source, SoundData soundData, Vector3 position, float pitchRange)
     {
-        Debug.Log("サウンドが再生されます");
         source.transform.position = position;
         source.pitch = soundData.pitch + Random.Range(-pitchRange, pitchRange);
         source.clip = soundData.clip;

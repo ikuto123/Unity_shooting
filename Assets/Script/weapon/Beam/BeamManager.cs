@@ -10,10 +10,8 @@ namespace Beam
         public int Damage { get; private set; }
         public Team Team { get; private set; }
         
-        // 反射回数をカウントするプロパティ
         public int BounceCount { get; set; }
         
-        // 外部からBeamMoveにアクセスできるようにプロパティを追加
         public BeamMove Mover { get; private set; }
         private BeamLifeTime _lifetime;
         
@@ -32,14 +30,14 @@ namespace Beam
             this.Team = team;
             _onDeactivatedCallback = onDeactivatedCallback;
 
-            // 初期化時に反射回数をリセット
+            //反射回数をリセット
             this.BounceCount = 0;
 
             Mover.Initialize(weaponData.BeamSpeed);
             _lifetime.StartLifetime(weaponData.BeamLifetime);
         }
 
-        // 衝突時に呼ばれる新しいメソッド
+        //衝突時に呼ばれる
         public void OnCollision(Collision collision)
         {
             if (collision.gameObject.TryGetComponent<ITeamAffiliated>(out var targetAffiliation))
@@ -50,8 +48,7 @@ namespace Beam
                     return; 
                 }
             }
-
-            // 衝突時の振る舞いを、武器が持つHitEffectに完全に委譲する
+            
             _weaponData?.HitEffect?.Execute(this, collision, _weaponData);
         }
 

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CameraModeChanger
 {
-    CinemachineCamera _MainPlayerCamera;
-    CinemachineCamera _FPSCamera;
+    CinemachineCamera _mainPlayerCamera;
+    CinemachineCamera _fPSCamera;
     
     public event Action OnCameraModeFPS;
     public event Action OnCameraModeTPS;
@@ -13,24 +13,24 @@ public class CameraModeChanger
     CharactorAnimator _playerAnimator;
     public CameraModeChanger(CinemachineCamera MainPlayerCamera , CinemachineCamera FPSCamera , CharactorAnimator playerAnimator)
     {
-        _MainPlayerCamera = MainPlayerCamera;
-        _FPSCamera = FPSCamera;
+        _mainPlayerCamera = MainPlayerCamera;
+        _fPSCamera = FPSCamera;
         _playerAnimator = playerAnimator;
     }
     
+    //FPSとTPSの切り替え
     public void ChangeCameraMode()
     {
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("押されています");
-            _MainPlayerCamera.gameObject.SetActive(false);
-            _FPSCamera.gameObject.SetActive(true);
+            _mainPlayerCamera.gameObject.SetActive(false);
+            _fPSCamera.gameObject.SetActive(true);
             _playerAnimator.Fire(true);
             OnCameraModeFPS?.Invoke();
         }
         if(Input.GetMouseButtonUp(1)) { 
-            _MainPlayerCamera.gameObject.SetActive(true);
-            _FPSCamera.gameObject.SetActive(false);
+            _mainPlayerCamera.gameObject.SetActive(true);
+            _fPSCamera.gameObject.SetActive(false);
             _playerAnimator.Fire(false);
             OnCameraModeTPS?.Invoke();
         }

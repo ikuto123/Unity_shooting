@@ -24,9 +24,9 @@ public class ChargeBarPresenter
         _model.OnChargeChanged -= UpdateChargeSlider;
     }
 
+    
     private void UpdateChargeSlider(int currentCharge, int maxCharge)
     {
-        Debug.Log("PlayerHP" + ((float)currentCharge / maxCharge));
         _view.fillAmount = (float)currentCharge / maxCharge;
     }
 }

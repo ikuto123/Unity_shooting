@@ -2425,6 +2425,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1616497703331380048, guid: 2bbe00b7fcb7153448be6af803e5dda0, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2647825018749022350, guid: 2bbe00b7fcb7153448be6af803e5dda0, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -6132,6 +6136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerCamera: {fileID: 1106867657}
+  _playerFPSCamera: {fileID: 1513998818}
   _stageCamera1: {fileID: 792383230}
   _stageCamera2: {fileID: 172907229}
   _worldSource: {fileID: 146259688}
@@ -11742,7 +11747,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.75
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -11870,7 +11875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab40a97f14623ea4892110540f9b68f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer: 1
+  IsPlayer: 0
 --- !u!114 &2018570157
 MonoBehaviour:
   m_ObjectHideFlags: 0

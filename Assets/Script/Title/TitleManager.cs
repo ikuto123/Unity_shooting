@@ -53,17 +53,17 @@ public class TitleManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(_firstSelectedButton);
     }
     
+    //ゲームスタート処理
     public void OnStartButtonClick()
     {
-        Debug.Log("ゲームスタート処理");
         SoundManager.Instance.PlaySE_2D(_ClickSE);
         GameManager.Instance.StartGame();
 
     }
     
+    //遊び方シーンへ遷移
     public void OnHowToPlayButtonClick()
     {
-        Debug.Log("遊び方シーンへ遷移");
         SoundManager.Instance.PlaySE_2D(_ClickSE);
         GameManager.Instance.HowToPlay();
     }
@@ -73,9 +73,9 @@ public class TitleManager : MonoBehaviour
         GameManager.Instance.QuitHowToPlay();
     }
     
+    //ゲーム終了処理
     public void OnQuitButtonClick()
     {
-        Debug.Log("ゲーム終了処理");
         SoundManager.Instance.PlaySE_2D(_ClickSE);
         GameManager.Instance.QuitGame();
     }

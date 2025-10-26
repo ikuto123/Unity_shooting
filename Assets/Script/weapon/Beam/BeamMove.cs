@@ -18,7 +18,7 @@ namespace Beam
             UpdateVelocity();
         }
 
-        // 進行方向を更新するためのメソッド
+        //進行方向を更新
         public void UpdateVelocity()
         {
             if(_rigidbody != null)

@@ -12,43 +12,38 @@ public class AreaControl : MonoBehaviour
     public event Action<float, float> OnProgressUpdated; 
     public event Action<Team?> OnGameEnd; 
 
-    private float _teamACaptureProgress = 0f;
-    private float _teamBCaptureProgress = 0f;
+    private float _teamAProgress = 0f;
+    private float _teamBProgress = 0f;
 
-    private List<CharactorTeam> _charactersInArea = new List<CharactorTeam>();
+    private List<CharactorTeam> _charactersInAreas = new List<CharactorTeam>();
     private bool _isGameFinished = false;
     
-    private float _progressUpdateTimer = 0f;
+    private float _progressTimer = 0f;
     private const float UPDATE_INTERVAL = 3.0f; 
 
     private void Awake()
     {
-        if (GameManager.Instance != null)
-        {
-            _timeToWin = GameManager.Instance.AreaTimeToWin;
-        }
-        else
-        {
-            Debug.LogError("GameManagerが見つかりません！デフォルトの勝利時間を使用します。");
-            _timeToWin = 10.0f; // フォールバック値
-        }
+        if (GameManager.Instance != null) { _timeToWin = GameManager.Instance.AreaTimeToWin; }
+        else { Debug.LogError("GameManagerが見つかりません"); }
     }
 
+    //エリアに入ったキャラクターをリストに追加
     private void OnTriggerEnter(Collider other)
     {
         CharactorTeam character = other.GetComponent<CharactorTeam>();
-        if (character != null && !_charactersInArea.Contains(character))
+        if (character != null && !_charactersInAreas.Contains(character))
         {
-            _charactersInArea.Add(character);
+            _charactersInAreas.Add(character);
         }
     }
-
+    
+　　//エリアから出たキャラクターをリストから削除
     private void OnTriggerExit(Collider other)
     {
         CharactorTeam character = other.GetComponent<CharactorTeam>();
         if (character != null)
         {
-            _charactersInArea.Remove(character);
+            _charactersInAreas.Remove(character);
         }
     }
 
@@ -61,81 +56,74 @@ public class AreaControl : MonoBehaviour
 
     private void UpdateCaptureProgress()
     {
-        int teamACount = _charactersInArea.Count(c => c.Team == Team.A);
-        int teamBCount = _charactersInArea.Count(c => c.Team == Team.B);
+        int teamACount = _charactersInAreas.Count(c => c.Team == Team.A);
+        int teamBCount = _charactersInAreas.Count(c => c.Team == Team.B);
 
         bool isProgressChanged = false;
-
-      
-        _progressUpdateTimer += Time.deltaTime;
-
-       
-        if (_progressUpdateTimer >= UPDATE_INTERVAL)
+        
+        _progressTimer += Time.deltaTime;
+        
+        //一定時間が立った際にチームが多い方のカウントを増やす
+        if (_progressTimer >= UPDATE_INTERVAL)
         {
-            _progressUpdateTimer -= UPDATE_INTERVAL;
+            _progressTimer -= UPDATE_INTERVAL;
 
             if (teamACount > teamBCount) 
             {
-                _teamACaptureProgress = Mathf.Min(_teamACaptureProgress + 1, _timeToWin);
+                _teamAProgress = Mathf.Min(_teamAProgress + 1, _timeToWin);
                 
                 isProgressChanged = true;
             }
             else if (teamBCount > teamACount) 
             {
-                _teamBCaptureProgress = Mathf.Min(_teamBCaptureProgress + 1, _timeToWin);
+                _teamBProgress = Mathf.Min(_teamBProgress + 1, _timeToWin);
                 
                 isProgressChanged = true;
             }
         }
 
-        // プログレスに変更があった場合のみイベントを発行
-        if (isProgressChanged)
-        {
-            OnProgressUpdated?.Invoke(_teamACaptureProgress, _teamBCaptureProgress);
-            // デバッグログ更新
-            Debug.Log($"エリア状況: Team A [{_teamACaptureProgress}/{_timeToWin}] vs Team B [{_teamBCaptureProgress}/{_timeToWin}]");
-        }
+        //ログレスに変更があった場合のみイベントを発行
+        if (isProgressChanged) { OnProgressUpdated?.Invoke(_teamAProgress, _teamBProgress); }
     }
 
+    //規定値に達したかどうか
     private void CheckForWin()
     {
-        if (_teamACaptureProgress >= _timeToWin)
+        if (_teamAProgress >= _timeToWin)
         {
             AnnounceWinner(Team.A);
         }
-        else if (_teamBCaptureProgress >= _timeToWin)
+        else if (_teamBProgress >= _timeToWin)
         {
             AnnounceWinner(Team.B);
         }
       
     }
 
+    //勝利チームの発表    
     private void AnnounceWinner(Team winningTeam)
     {
-        if (_isGameFinished) return; // 既に終了していたら何もしない
+        if (_isGameFinished) return; 
         _isGameFinished = true;
         OnGameEnd?.Invoke(winningTeam);
-        Debug.Log($"<color=yellow>決着！ {winningTeam} の勝利！</color>");
     }
     
+    //引き分けの処理
     public Team? GetLeadingTeamOrDraw()
     {
-        // 進捗が大きい方を返す。同点なら null（引き分け）
-        if (_teamACaptureProgress > _teamBCaptureProgress) return Team.A;
-        if (_teamBCaptureProgress > _teamACaptureProgress) return Team.B;
+        //進捗が大きい方を返す
+        if (_teamAProgress > _teamBProgress) return Team.A;
+        if (_teamBProgress > _teamAProgress) return Team.B;
         return null;
     }
 
-// 時間切れによる強制終了（勝者は現在進捗から判定）
+    //時間切れによる強制終了
     public void ForceEndByTimeUp()
     {
-        if (_isGameFinished) return; // 二重終了防止
+        if (_isGameFinished) return; 
         _isGameFinished = true;
 
         Team? winner = GetLeadingTeamOrDraw();
-        OnGameEnd?.Invoke(winner);   // Presenter/UIへ通知
-        Debug.Log(winner == null 
-            ? "<color=yellow>時間切れ：引き分け</color>"
-            : $"<color=yellow>時間切れ：{winner} の勝利！</color>");
+        OnGameEnd?.Invoke(winner);  
     }
 }

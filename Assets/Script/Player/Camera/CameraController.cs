@@ -15,17 +15,18 @@ public class CameraController
         _sensitivity = sensitivity;
     }
 
+    //カメラの回転処理
     public void CameraRotation()
     {
         Vector3 input = _playerInput.MouseInputDistance() * _sensitivity;
 
-        // X軸（上下）だけを計算して、自前で保持
+        //X軸だけを計算して、自前で保持
         _pitch -= input.y;
 
-        // X軸のみ制限
+        //X軸のみ制限
         _pitch = Mathf.Clamp(_pitch, -20f, 20f);
 
-        // Y軸（左右）は制限なし
+        //Y軸は制限なし
         float yaw = _player.rotation.eulerAngles.y + input.x;
         
         _player.rotation = Quaternion.Euler(_pitch, yaw, 0f);

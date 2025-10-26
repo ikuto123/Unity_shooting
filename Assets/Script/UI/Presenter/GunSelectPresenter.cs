@@ -42,6 +42,7 @@ public class GunSelectPresenter
     
     private int _selectedIndex = -1;
 
+    //現在の武器に応じて武器のUIにアウトラインを付ける
     private void UpdateGunSelectUI(int currentGunId, string maxCharge)
     {
         int idx = currentGunId - 1;
@@ -49,16 +50,16 @@ public class GunSelectPresenter
         
         if (_selectedIndex >= 0 && _selectedIndex < _gunImageOutlines.Length)
         {
-            var prev = _gunImageOutlines[_selectedIndex];
-            if (prev) prev.enabled = false; 
+            var prevOutline = _gunImageOutlines[_selectedIndex];
+            if (prevOutline) prevOutline.enabled = false; 
         }
         
         if (idx >= 0 && idx < _gunImageOutlines.Length)
         {
-            var now = _gunImageOutlines[idx];
-            if (now)
+            var nowOutline = _gunImageOutlines[idx];
+            if (nowOutline)
             {
-                now.enabled = true;
+                nowOutline.enabled = true;
             }
         }
 

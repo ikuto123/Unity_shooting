@@ -17,7 +17,7 @@ public class AI_IdleState : IState
 
     public void OnUpdate()
     {
-        // 即座に目標エリアへの移動状態へ移行する
+        //目標エリアへの移動状態へ移行する
         _ai.ChangeState(new AI_MoveToTargetAreaState(_ai));
     }
 

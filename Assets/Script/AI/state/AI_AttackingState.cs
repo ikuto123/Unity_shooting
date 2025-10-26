@@ -14,12 +14,11 @@ public class AI_AttackingState : IState
     {
         _ai.Movement.Stop();
         _ai.CharacterAnimator?.Fire(true);
-        Debug.Log("攻撃状態に入りました！");
     }
 
     public void OnUpdate()
     {
-        //ターゲットを見失った場合、移動状態に遷移
+        //ターゲットを見失っら移動状態に
         if (_ai.targetEnemy == null)
         {
             _ai.ChangeState(new AI_MoveToTargetAreaState(_ai));
@@ -27,7 +26,7 @@ public class AI_AttackingState : IState
         }
         float distanceToEnemy = Vector3.Distance(_ai.transform.position, _ai.targetEnemy.position);
         
-        //アタックの距離より離れたらチェイスする
+        //アタックの距離より離れたら敵を追いかけるステートに移行
         if (distanceToEnemy > _ai.attackRange)
         {
             _ai.ChangeState(new AI_ChaseEnemyState(_ai));
@@ -39,8 +38,8 @@ public class AI_AttackingState : IState
         //チャージが残っているかどうか
         if (_ai.CharacterManager.CurrentCharge < currentWeapon.EnergyCost)
         {
-            Debug.Log(_ai.gameObject.name + ": エネルギー切れのため、索敵状態に戻ります。");
-            // チャージが足りないので、索敵状態に戻る
+            
+            //チャージが切れた場合回復エリアを探す
             _ai.ChangeState(new AI_ChargeWeaponState(_ai));
             return;
         }
@@ -59,6 +58,5 @@ public class AI_AttackingState : IState
     public void OnExit()
     {
         _ai.CharacterAnimator?.Fire(false);
-        Debug.Log("攻撃状態を終了します");
     }
 }

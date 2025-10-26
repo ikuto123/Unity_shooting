@@ -11,19 +11,16 @@ public class WeaponSkin : MonoBehaviour
     private void Start()
     {
         _characterManager = GetComponentInParent<CharacterManager>();
-        //デリゲート関数の登録
         _characterManager.WeaponManager.OnGunSwitched += HandleGunSkinSwitch;
     }
-
-    //デリゲート関数(イベントのみで呼ばれる)
+    
+    //銃のスキンの変更
     private void HandleGunSkinSwitch(int gunID, string gunName)
     {
         foreach (GameObject skin in _GunSkins) skin.SetActive(false);
         _GunSkins[gunID - 1].SetActive(true);
     }
     
-    
-    //このオブジェクトが消えた際に登録を解除する
     private void OnDestroy()
     {
         if (_characterManager != null && _characterManager.WeaponManager != null)

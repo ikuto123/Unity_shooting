@@ -21,6 +21,7 @@ public class AIMovement
         }
     }
 
+    //目的地の設定
     public void SetTarget(Vector3 destination)
     {
         if (_navMeshAgent != null && _navMeshAgent.isOnNavMesh)
@@ -34,6 +35,7 @@ public class AIMovement
     {
         if (_navMeshAgent == null || _rigidbody == null) return;
         
+        //コライダーとずれないようにする
         _navMeshAgent.speed = _controller.moveSpeed;
         _navMeshAgent.nextPosition = _rigidbody.position;
 
@@ -47,6 +49,7 @@ public class AIMovement
             return;
         }
         
+        //物理エンジンベースでキャラクターを動かす
         Vector3 desiredVelocity = _navMeshAgent.velocity;
         _rigidbody.linearVelocity = new Vector3(desiredVelocity.x, _rigidbody.linearVelocity.y, desiredVelocity.z);
         
@@ -56,6 +59,7 @@ public class AIMovement
             _controller.CharacterAnimator.UpdateMovementAnimation(localVelocity);
         }
         
+        //進行方向にキャラクターをなめらかに回転させる
         Vector3 lookDirection = (_navMeshAgent.steeringTarget - _controller.transform.position).normalized;
         lookDirection.y = 0; 
         if (lookDirection != Vector3.zero)
@@ -65,6 +69,7 @@ public class AIMovement
         }
     }
     
+    //移動停止
     public void Stop()
     {
         if (_navMeshAgent != null)

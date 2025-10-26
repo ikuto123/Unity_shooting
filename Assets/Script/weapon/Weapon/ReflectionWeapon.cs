@@ -8,4 +8,10 @@ public class ReflectionWeapon : WeaponBaseClass
     {
         this.HitEffect = new ReflectionEffect();
     }
+    
+    public override bool Fire(IChargeable user)
+    {
+        bool firedSuccessfully = base.Fire(user);
+        return firedSuccessfully;
+    }
 }

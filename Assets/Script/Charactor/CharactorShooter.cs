@@ -20,6 +20,7 @@ public class CharactorShooter : MonoBehaviour
         _character = GetComponent<CharactorTeam>();
     }
     
+    //初期化でエラー出る場合があるので念のためStartにも記載
     private void Start()
     {
         if (_characterManager?.WeaponManager != null)
@@ -38,7 +39,6 @@ public class CharactorShooter : MonoBehaviour
         if (_characterManager?.WeaponManager != null)
         {
             _characterManager.WeaponManager.OnFireRequest -= FireBeamObj;
-            
             _characterManager.WeaponManager.OnFireRequest += FireBeamObj;
         }
         else
@@ -53,23 +53,26 @@ public class CharactorShooter : MonoBehaviour
         {
             _characterManager.WeaponManager.OnFireRequest -= FireBeamObj;
         }
-        _activeBeams.Clear();
+        _activeBeams.Clear();//リストの初期化
     }
 
     //弾の発射処理
     private void FireBeamObj(WeaponBaseClass weaponData)
     {
+
         if (!GameManager.Instance.IsGameActive)
         {
+            Debug.Log("ゲームがアクティブでないため、発射できません");
             return;
         }
         
         if (_activeBeams.Count >= weaponData.MaxActiveBeam)
         {
-            Debug.Log("発射制限数に達しているため、新しい弾を発射できません。");
+            Debug.Log("発射制限数に達しているため、新しい弾を発射できません");
             return; 
         }
         
+        //プールから弾を取得
         GameObject beamObj = BeamPoolManager.Instance.GetPooledBeam();
         
         if (beamObj != null)

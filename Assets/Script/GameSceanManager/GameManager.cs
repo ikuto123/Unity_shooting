@@ -9,6 +9,7 @@ namespace GameScene
     {
         public static GameManager Instance { get; private set; }
         [SerializeField] private CinemachineCamera _playerCamera;
+        [SerializeField] private CinemachineCamera _playerFPSCamera;
 
         [SerializeField] private CinemachineCamera _stageCamera1;
         [SerializeField] private CinemachineCamera _stageCamera2;
@@ -53,9 +54,9 @@ namespace GameScene
 
         private async void Start()
         {
-            await StartStandTimer();
-            _worldSource.Play();
-            SpawnManager.SpawnCharacters();
+            await StartStandTimer();//ゲーム開始前のカウントダウンタイマー
+            _worldSource.Play();//ゲーム開始時にBGM再生
+            SpawnManager.SpawnCharacters();//キャラクターのスポーン
         }
         
         
@@ -77,6 +78,7 @@ namespace GameScene
             _isGameActive = true;
         }
 
+        //Jsonファイルからゲームに必要な設定を読み込む
         private void LoadGameSettings()
         {
             var jsonTextAsset = Resources.Load<TextAsset>("Data/GameMasterData");
@@ -85,7 +87,6 @@ namespace GameScene
                 GameSettingsData settings = JsonUtility.FromJson<GameSettingsData>(jsonTextAsset.text);
                 _remainingTime = settings.gameDuration;
                 AreaTimeToWin = settings.areaTimeToWin;
-
             }
             else
             {
@@ -97,6 +98,7 @@ namespace GameScene
         {
             if (!_isGameActive || _isPaused) return;
 
+            //ゲーム中ののカウントダウン
             if (_remainingTime > 0)
             {
                 _remainingTime -= Time.deltaTime;
@@ -121,6 +123,7 @@ namespace GameScene
             }
         }
 
+        //ステージのカメラに切り替える
         public void SwitchToStageCamera()
         {
             if (_playerCamera != null) _playerCamera.gameObject.SetActive(false);
@@ -138,15 +141,18 @@ namespace GameScene
             }
         }
 
+        //Playerのカメラに切り替える
         public void SwitchToPlayerCamera()
         {
             if (_playerCamera != null) _playerCamera.gameObject.SetActive(true);
+            if (_playerFPSCamera != null) _playerFPSCamera.gameObject.SetActive(false);
 
             if (_stageCamera1 != null) _stageCamera1.gameObject.SetActive(false);
             if (_stageCamera2 != null) _stageCamera2.gameObject.SetActive(false);
         }
 
 
+        //メニューが押されたときの処理
         public void PauseMenu()
         {
             if (!_isGameActive) return;

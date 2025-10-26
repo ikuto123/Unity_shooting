@@ -27,10 +27,7 @@ public class Timer : MonoBehaviour
     
     private void UpdateTimerText(float remainingTime)
     {
-        
         remainingTime = Mathf.Max(0, remainingTime);
-        
-        
         _timerText.text = remainingTime.ToString("F1");
     }
 }

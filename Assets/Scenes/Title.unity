@@ -4877,7 +4877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2b448962aa7d34082bf7ffd8d9ad3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HowToPlayUI: {fileID: 1993723447}
+  _howToPlayUI: {fileID: 1993723447}
 --- !u!4 &1997248646
 Transform:
   m_ObjectHideFlags: 0

@@ -25,7 +25,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _PlayerLose;
     [SerializeField] private TextMeshProUGUI _DrawText;
     [Header("死亡テキスト設定")]
-    [SerializeField] private GameObject _playerDieTextsGO; // GameObjectへの参照に変更
+    [SerializeField] private GameObject _playerDieTextsGO; 
     [SerializeField] private Color _darkRed = new Color(0.5f, 0, 0);
     [SerializeField] private Color _lightRed = Color.red;
     [SerializeField] private float _pulsateSpeed = 2f;
@@ -54,7 +54,7 @@ public class UIManager : MonoBehaviour
     private AreaPresenter _areaPresenter;
     private ResultPresenter _resultPresenter;
     private DeathTextPresenter _deathTextPresenter;
-    private MunuButtonPresenter _menuButtonPresenter;
+    private MenuButtonPresenter _menuButtonPresenter;
     private TargetPointPresenter _targetPointPresenter;
     
     [SerializeField] private SoundData _clickSE;
@@ -68,8 +68,8 @@ public class UIManager : MonoBehaviour
 
         _areaPresenter = new AreaPresenter(_areaControl, _teamASlider, _teamBSlider);
         _resultPresenter = new ResultPresenter(_areaControl, _PlayerWin, _PlayerLose, _playerTeam.Team, _DrawText);
-        _deathTextPresenter = new DeathTextPresenter(_characterManager, _playerDieTextsGO, this, _darkRed,_lightRed,_pulsateSpeed);
-        _menuButtonPresenter = new MunuButtonPresenter(_gameManager, _restartButton, _mapButton, _titleButton,_howToPlayButton, _quitMapButton, _mapPanel,_howToPlayPanel , _clickSE);
+        _deathTextPresenter = new DeathTextPresenter(_characterManager, _playerDieTextsGO, _darkRed,_lightRed,_pulsateSpeed);
+        _menuButtonPresenter = new MenuButtonPresenter(_gameManager, _restartButton, _mapButton, _titleButton,_howToPlayButton, _quitMapButton, _mapPanel,_howToPlayPanel , _clickSE);
         _pauseMenuPanel.SetActive(false);
     }
 
