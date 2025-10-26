@@ -74,7 +74,6 @@ public class CharactorShooter : MonoBehaviour
         
         if (beamObj != null)
         {
-            Debug.Log("ビーム発射 " + this.gameObject.name);
             //エネルギー消費
             _characterManager.UseCharge(weaponData.EnergyCost);
             

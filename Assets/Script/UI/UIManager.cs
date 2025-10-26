@@ -42,6 +42,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button _quitMapButton;
     [SerializeField] private GameObject _mapPanel;
     [SerializeField] private GameObject _howToPlayPanel;
+    
+    [Header("ターゲット")]
+    [SerializeField] private GameObject _target_TPS;
+    [SerializeField] private GameObject _target_FPS;
+    private CameraModeChanger _cameraModeChanger;
    
     private HpBarPresenter _healthBarPresenter;
     private ChargeBarPresenter _chargeBarPresenter;
@@ -50,12 +55,13 @@ public class UIManager : MonoBehaviour
     private ResultPresenter _resultPresenter;
     private DeathTextPresenter _deathTextPresenter;
     private MunuButtonPresenter _menuButtonPresenter;
+    private TargetPointPresenter _targetPointPresenter;
     
     [SerializeField] private SoundData _clickSE;
     
     private void Awake()
     {
-        // 専門家たちを生成し、必要な部品（モデルとビュー）を渡す
+        //Presenterの初期化
         _healthBarPresenter = new HpBarPresenter(_characterManager, _hpSlider);
         _chargeBarPresenter = new ChargeBarPresenter(_characterManager, _energySlider);
         _gunSelectPresenter = new GunSelectPresenter(_characterManager, _gunSelectUI);
@@ -81,11 +87,14 @@ public class UIManager : MonoBehaviour
         _gameManager.OnGameStart += HandleGameStarted;
         _gameStartUI.SetActive(true);
         
+        //これだけ初期化のタイミングずらさないとnullになる(コンストラクタでイベントを登録)
+        var playerInput = FindObjectOfType<PlayerInputController>();
+        _cameraModeChanger = playerInput?.GetCameraModeChanger();
+        _targetPointPresenter = new TargetPointPresenter(_cameraModeChanger , _target_TPS , _target_FPS);
     }
 
     private void OnDisable()
     {
-        // 各専門家に監視を終了させる
         _healthBarPresenter.Disable();
         _chargeBarPresenter.Disable();
         _gunSelectPresenter.Disable();
@@ -105,8 +114,7 @@ public class UIManager : MonoBehaviour
     private IEnumerator ReturnToTitleAfterDelay(float seconds)
     {
         yield return new WaitForSecondsRealtime(seconds);
-
-        // 次のシーンへ行く前に時刻を戻す
+        
         Time.timeScale = 1f;
         SceneManager.LoadScene("Title");
     }

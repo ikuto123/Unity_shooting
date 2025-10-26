@@ -21,6 +21,8 @@ namespace Taitle
             {
                 Destroy(gameObject);
             }
+
+            Cursor.lockState = CursorLockMode.None;
         }
 
         public void StartGame()

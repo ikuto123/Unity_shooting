@@ -20,13 +20,17 @@ public class PlayerInputController : MonoBehaviour
     private float _sensitivity = 3.5f;//カメラ感度
     
     CharacterManager _characterManager;
-    private void Start()
+    
+    private void Awake()
     {
         _player = this.gameObject.transform;
         _cameraController = new CameraController(_player , _sensitivity);
         _cameraModeChanger = new CameraModeChanger(_MainPlayerCamera , _FPSCamera , _playerAnimator);
         _characterManager = GetComponent<CharacterManager>();
         _playerMoveInput = new PlayerMoveInput(GetComponent<Rigidbody>());
+    }
+    private void Start()
+    {
         _gameManager = GameScene.GameManager.Instance;
     }
     
@@ -68,6 +72,11 @@ public class PlayerInputController : MonoBehaviour
         {
             _playerMoveInput.Movement();
         }
+    }
+    
+    public CameraModeChanger GetCameraModeChanger()
+    {
+        return _cameraModeChanger;
     }
     
 }
