@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class HowToPlayUI : MonoBehaviour
 {
     [SerializeField] private GameObject _pagePearent;
+    [SerializeField] private SoundData _clickSE;
     
     private float slideDuration = 0.4f;
     private float TargetPagePos;
@@ -63,12 +64,14 @@ public class HowToPlayUI : MonoBehaviour
     public void OnRightArrowClick()
     {
         TargetPagePos += -1880;
+        SoundManager.Instance.PlaySE_2D(_clickSE);
         StartSlide();
     }
 
     public void OnLeftArrowClick()
     {
         TargetPagePos -= -1880;
+        SoundManager.Instance.PlaySE_2D(_clickSE);
         StartSlide();
     }
     

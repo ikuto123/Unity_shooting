@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class MouseOverText : MonoBehaviour
 {
     private Outline _outline;
+    
+    [SerializeField] private SoundData _mouseOverSE;
     private void Start()
     {
         _outline = GetComponent<Outline>();
@@ -14,6 +16,7 @@ public class MouseOverText : MonoBehaviour
     public void OnPointerEnter()
     {
         Debug.Log("OnPointerEnter");
+        SoundManager.Instance.PlaySE_2D(_mouseOverSE);
         _outline.enabled = true;
     }
     

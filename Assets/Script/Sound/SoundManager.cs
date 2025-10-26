@@ -45,11 +45,10 @@ public class SoundManager : MonoBehaviour
         }
     }
     
-    public void PlaySE_2D(SoundData soundData, float pitchRange = 0.05f)
+    public void PlaySE_2D(SoundData soundData)
     {
         if (soundData == null || soundData.clip == null) return;
         
-        _Source_2D.pitch = soundData.pitch + Random.Range(-pitchRange, pitchRange);
         _Source_2D.PlayOneShot(soundData.clip, soundData.volume);
     }
     

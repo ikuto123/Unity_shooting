@@ -51,6 +51,8 @@ public class UIManager : MonoBehaviour
     private DeathTextPresenter _deathTextPresenter;
     private MunuButtonPresenter _menuButtonPresenter;
     
+    [SerializeField] private SoundData _clickSE;
+    
     private void Awake()
     {
         // 専門家たちを生成し、必要な部品（モデルとビュー）を渡す
@@ -61,7 +63,7 @@ public class UIManager : MonoBehaviour
         _areaPresenter = new AreaPresenter(_areaControl, _teamASlider, _teamBSlider);
         _resultPresenter = new ResultPresenter(_areaControl, _PlayerWin, _PlayerLose, _playerTeam.Team, _DrawText);
         _deathTextPresenter = new DeathTextPresenter(_characterManager, _playerDieTextsGO, this, _darkRed,_lightRed,_pulsateSpeed);
-        _menuButtonPresenter = new MunuButtonPresenter(_gameManager, _restartButton, _mapButton, _titleButton,_howToPlayButton, _quitMapButton, _mapPanel,_howToPlayPanel);
+        _menuButtonPresenter = new MunuButtonPresenter(_gameManager, _restartButton, _mapButton, _titleButton,_howToPlayButton, _quitMapButton, _mapPanel,_howToPlayPanel , _clickSE);
         _pauseMenuPanel.SetActive(false);
     }
 

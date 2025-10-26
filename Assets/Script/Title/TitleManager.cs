@@ -11,10 +11,11 @@ public class TitleManager : MonoBehaviour
     }
     
     private TitleState _currentState;
+    private TitleInput _titleInput;
 
     [Header("UIグループ")]
     [SerializeField]
-    private GameObject _taitleGroups; 
+    private GameObject _titleGroups; 
 
     [SerializeField]
     private GameObject _mainMenuGroup;  
@@ -23,11 +24,15 @@ public class TitleManager : MonoBehaviour
     [SerializeField]
     private GameObject _firstSelectedButton; 
     
+    [Header("SE")]
+    [SerializeField] private SoundData _ClickSE;
     void Start()
     {
         _currentState = TitleState.PressEnter;
+        _titleInput = new TitleInput();
+        _titleInput.OnEnterPressed += ShowMainMenu;
         
-        _taitleGroups.SetActive(true);  
+        _titleGroups.SetActive(true);  
         _mainMenuGroup.SetActive(false); 
     }
     
@@ -35,17 +40,14 @@ public class TitleManager : MonoBehaviour
     {
         if (_currentState != TitleState.PressEnter) return;
 
-        if (Input.GetKey(KeyCode.Return))
-        {
-            ShowMainMenu();
-        }
+        _titleInput.ReadInput();
     }
     
     private void ShowMainMenu()
     {
         _currentState = TitleState.MainMenu;
         
-        _taitleGroups.SetActive(false);
+        _titleGroups.SetActive(false);
         _mainMenuGroup.SetActive(true);
         
         EventSystem.current.SetSelectedGameObject(_firstSelectedButton);
@@ -54,6 +56,7 @@ public class TitleManager : MonoBehaviour
     public void OnStartButtonClick()
     {
         Debug.Log("ゲームスタート処理");
+        SoundManager.Instance.PlaySE_2D(_ClickSE);
         GameManager.Instance.StartGame();
 
     }
@@ -61,6 +64,7 @@ public class TitleManager : MonoBehaviour
     public void OnHowToPlayButtonClick()
     {
         Debug.Log("遊び方シーンへ遷移");
+        SoundManager.Instance.PlaySE_2D(_ClickSE);
         GameManager.Instance.HowToPlay();
     }
 
@@ -72,6 +76,7 @@ public class TitleManager : MonoBehaviour
     public void OnQuitButtonClick()
     {
         Debug.Log("ゲーム終了処理");
+        SoundManager.Instance.PlaySE_2D(_ClickSE);
         GameManager.Instance.QuitGame();
     }
 }

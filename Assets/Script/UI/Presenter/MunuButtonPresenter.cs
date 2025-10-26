@@ -15,8 +15,10 @@ public class MunuButtonPresenter
     private GameObject _MapPanel;
     private GameObject _HowToPlayPanel;
     
+    private SoundData _clickSE;
     public MunuButtonPresenter(GameManager gameManager, Button RestartButton,
-        Button MapButton, Button TitleButton , Button HowToPlayButton, Button QuitMapAndHowToPlayButton, GameObject MapPanel , GameObject HowToPlayPanel)
+        Button MapButton, Button TitleButton , Button HowToPlayButton, Button QuitMapAndHowToPlayButton,
+        GameObject MapPanel , GameObject HowToPlayPanel , SoundData clickSE)
     {
         _gameManager = gameManager;
         _RestartButton = RestartButton;
@@ -26,6 +28,7 @@ public class MunuButtonPresenter
         _HowToPlayButton = HowToPlayButton;
         _QuitMapAndHowToPlayButton = QuitMapAndHowToPlayButton;
         _HowToPlayPanel = HowToPlayPanel;
+        _clickSE = clickSE;
     }
         
     public void Enable()
@@ -48,24 +51,28 @@ public class MunuButtonPresenter
     
     private void OnRestart()
     {
+        SoundManager.Instance.PlaySE_2D(_clickSE);
         _gameManager.PauseMenu();
     }
 
     private void OnBackToTitle()
     {
         Time.timeScale = 1f;
+        SoundManager.Instance.PlaySE_2D(_clickSE);
         SceneManager.LoadScene("Title");
     }
 
     private void OnShowMap()
     {
         _MapPanel.gameObject.SetActive(true); 
+        SoundManager.Instance.PlaySE_2D(_clickSE);
         _QuitMapAndHowToPlayButton.gameObject.SetActive(true);
     }
 
     private void OnShowHowToPlay()
     {
         _HowToPlayPanel.gameObject.SetActive(true); 
+        SoundManager.Instance.PlaySE_2D(_clickSE);
         _QuitMapAndHowToPlayButton.gameObject.SetActive(true);
     }
     private void OnQuitMapAndHowToPlay()
@@ -73,6 +80,7 @@ public class MunuButtonPresenter
         _MapPanel.gameObject.SetActive(false);
         _HowToPlayPanel.gameObject.SetActive(false);
         _QuitMapAndHowToPlayButton.gameObject.SetActive(false);
+        SoundManager.Instance.PlaySE_2D(_clickSE);
     }
     
 }

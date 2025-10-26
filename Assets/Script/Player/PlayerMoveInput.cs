@@ -6,6 +6,7 @@ public class PlayerMoveInput
     private float _runSpeed = 6f;
     private float _strafeSpeedMultiplier = 0.5f;
     
+    
     private Rigidbody _rb;
     private Vector3 _moveDirection;
 
@@ -19,7 +20,7 @@ public class PlayerMoveInput
     
     public void ReadInput(bool isRun)
     {
-        // 入力方向をリセット
+        //入力方向をリセット
         _moveDirection = Vector3.zero;
         
         if (Input.GetKey(KeyCode.W)) { _moveDirection += Vector3.forward; }
